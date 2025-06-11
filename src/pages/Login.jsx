@@ -75,23 +75,33 @@ const Login = () => {
         alignItems: "center",
         minHeight: "100vh",
         minWidth: "100vw",
-        backgroundImage: 'url(/images/Inicio.png)',
+        backgroundImage: 'url(/images/inicio.png)',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        backgroundPosition: "center"
       }}
     >
       <Stack
-        spacing={3}
+        spacing={1}
         alignItems="center"
+        flexDirection="column"
         sx={{
           width: {
             xs: "100%",
             sm: "100%",
-            md: "auto",
-            lg: "auto",
-            xl: "auto",
+            md: "35%",
+            lg: "35%",
+            xl: "40%",
           },
+          backgroundColor: "#f9f9f9",
+          boxShadow: 4,
+          padding: {
+            xs: "2rem",
+            sm: "2rem",
+            md: "2rem",
+            lg: "2rem",
+            xl: "2rem"
+          }
         }}
       >
         <Box>
@@ -106,6 +116,8 @@ const Login = () => {
                 xl: "2.8rem",
               },
               textAlign: "center",
+              color: "black",
+              marginBottom: "1.3rem"
             }}
           >
             Iniciar sesión
@@ -117,16 +129,16 @@ const Login = () => {
                 xs: "1rem",
                 sm: "1rem",
                 md: "1.2rem",
-                lg: "1.5rem",
+                lg: "1.1rem",
                 xl: "1.5rem",
               },
               textAlign: "center",
+              color: "black"
             }}
           >
             ¡Bienvenido de nuevo, te hemos echado de menos!
           </Typography>
         </Box>
-
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -142,77 +154,80 @@ const Login = () => {
             alignItems: "center",
             justifyContent: "center",
             flexWrap: "wrap",
-            gap: 2,
+            gap: 3,
+            maxWidth: 255,
+            width: "100%"
           }}
         >
           <TextField
             label="Email"
-            variant="outlined"
+            variant="standard"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             InputLabelProps={{ required: false }}
             sx={{
-              input: { color: "white" },
-              label: { color: "white" },
-              "& label.Mui-focused": { color: "white" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "white",
-                },
-                "&:hover fieldset": {
-                  borderColor: "white",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "white",
-                },
+              input: { color: "black" },
+              label: { color: "black" },
+              "& label.Mui-focused": { color: "black" },
+              "& .MuiInput-underline:before": {
+                borderBottomColor: "black"
+              },
+              "& .MuiInput-underline:hover:before": {
+                borderBottomColor: "black"
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "black"
               },
               width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
             }}
           />
           <TextField
             label="Alias"
-            variant="outlined"
+            variant="standard"
             value={alias}
             onChange={(e) => setAlias(e.target.value)}
             required
             InputLabelProps={{ required: false }}
             sx={{
-              input: { color: "white" },
-              label: { color: "white" },
-              "& label.Mui-focused": { color: "white" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "white",
-                },
-                "&:hover fieldset": {
-                  borderColor: "white",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "white",
-                },
+              input: { color: "black" },
+              label: { color: "black" },
+              "& label.Mui-focused": { color: "black" },
+              "& .MuiInput-underline:before": {
+                borderBottomColor: "black"
+              },
+              "& .MuiInput-underline:hover:before": {
+                borderBottomColor: "black"
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "black"
               },
               width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
             }}
           />
           <TextField
             label="Código"
-            variant="outlined"
+            variant="standard"
             type={showCodigo ? 'number' : 'password'}
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
             required
             InputLabelProps={{ required: false }}
             sx={{
-              input: { color: 'white' },
-              label: { color: 'white' },
-              '& label.Mui-focused': { color: 'white' },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'white' },
-                '&:hover fieldset': { borderColor: 'white' },
-                '&.Mui-focused fieldset': { borderColor: 'white' },
+              input: { color: 'black' },
+              label: { color: 'black' },
+              '& label.Mui-focused': { color: 'black' },
+              '& .MuiInput-underline:before': {
+                borderBottomColor: 'black',
+              },
+              '& .MuiInput-underline:hover:before': {
+                borderBottomColor: 'black',
+              },
+              '& .MuiInput-underline:after': {
+                borderBottomColor: 'black',
               },
               width: { xs: '100%', sm: '100%', md: 250, lg: 250, xl: 255 },
+              marginBottom: "1rem"
             }}
             InputProps={{
               endAdornment: (
@@ -221,114 +236,78 @@ const Login = () => {
                     onClick={handleToggleShowCodigo}
                     edge="end"
                     sx={{
-                      color: "#ffff",
-                      outline: "focus",
-                      boxShadow: "none",
-                      "&:focus": {
-                        outline: "none",
-                        boxShadow: "none"
-                      },
-                      "&:focus-visible": {
-                        outline: "none",
-                        boxShadow: "none"
-                      }
+                      color: "#000", // ahora el ícono será negro
+                      "&:focus": { outline: "none", boxShadow: "none" },
+                      "&:focus-visible": { outline: "none", boxShadow: "none" },
                     }}
                   >
-                    {showCodigo ? <VisibilityOff /> : <Visibility />}
+                    {showCodigo ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
 
-          <Box
+          <Button
+            type="submit"
+            variant="contained"
+            color="success"
+            disabled={loading}
             sx={{
-              display: "flex",
-              flexDirection: {
-                xs: "column",
-                sm: "column",
-                md: "row",
-                lg: "row",
-                xl: "row",
+              fontSize: "1rem",
+              height: 50,
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: 250,
+                lg: 250,
+                xl: 255
               },
-              alignItems: "center",
-              marginTop: "1rem",
-              gap: 2,
-              width: "100%",
-              justifyContent: "center",
+              backgroundColor: "#74c69d",
+              "&:hover": {
+                backgroundColor: "#52b788"
+              }
             }}
+            disableElevation
           >
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              disabled={loading}
-              sx={{
-                fontSize: "1rem",
-                height: 50,
-                width: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: "30%",
-                  lg: "22%",
-                  xl: "20%",
-                },
-                backgroundColor: "#74c69d",
-                "&:hover": {
-                  backgroundColor: "#52b788"
-                }
-              }}
-              disableElevation
-            >
-              {loading ? "Cargando..." : "Ingresar"}
-            </Button>
-            <Button
-              variant="contained"
-              component="a"
-              onClick={handleCuentaNueva}
-              color="primary"
-              sx={{
-                fontSize: "1rem",
-                height: 50,
-                width: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: "30%",
-                  lg: "15%",
-                  xl: "15%",
-                },
-                backgroundColor: "#d8f3dc",
-                "&:hover": {
-                  backgroundColor: "#b7e4c7",
-                  color: "#000"
-                }
-              }}
-            >Nueva cuenta
-            </Button>
-            <Button
-              variant="contained"
-              component="a"
-              onClick={handleRecuperarCodigo}
-              color="primary"
-              sx={{
-                fontSize: "1rem",
-                height: 50,
-                width: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: "30%",
-                  lg: "15%",
-                  xl: "15%",
-                },
-                backgroundColor: "#d8f3dc",
-                "&:hover": {
-                  backgroundColor: "#b7e4c7",
-                  color: "#000"
-                }
-              }}
-            >Recuperar código
-            </Button>
-          </Box>
+            {loading ? "Cargando..." : "Ingresar"}
+          </Button>
+          <Button
+            component="a"
+            onClick={handleCuentaNueva}
+            color="primary"
+            sx={{
+              fontSize: "1rem",
+              height: 25,
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: 250,
+                lg: 250,
+                xl: 255
+              },
+              color: "black"
+            }}
+          >Nueva cuenta
+          </Button>
+          <Button
+            component="a"
+            onClick={handleRecuperarCodigo}
+            color="primary"
+            sx={{
+              fontSize: "1rem",
+              height: 25,
+              width: {
+                xs: "100%",
+                sm: "100%",
+                md: 250,
+                lg: 250,
+                xl: 255
+              },
+              color: "black"
+            }}
+          >Recuperar código
+          </Button>
         </Box>
       </Stack>
     </Box>
