@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton, Alert } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton, Alert, Snackbar } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [alias, setAlias] = useState('');
-  const [codigo, setCodigo] = useState('');
   const [showCodigo, setShowCodigo] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -25,10 +18,6 @@ const Login = () => {
 
   const handleRecuperarCodigo = () => {
     navigate('/recuperacionTotp');
-  };
-
-  const handleCuentaNueva = () => {
-    navigate('/Register');
   };
 
   const handleSubmit = async (e) => {
@@ -45,7 +34,7 @@ const Login = () => {
       const res = response.data;
 
       if (res.success && res.user) {
-        setMensaje("Datos ingresados correctamente");
+        setMensaje("Datos ingresados correctos");
         setSeverity("success");
         setTimeout(() => {
           setMensaje('');
@@ -58,9 +47,9 @@ const Login = () => {
           balance: res.user.balance,
           token: data.totpToken
         }));
-        
+
       } else {
-        setMensaje("Error al logearse");
+        setMensaje("Error en los datos ingresados");
         setSeverity("error");
         setTimeout(() => {
           setMensaje('');
@@ -76,7 +65,7 @@ const Login = () => {
           state: { alias },
         });
       } else {
-        setMensaje("Error al logearse");
+        setMensaje("Error en los datos ingresados");
         setSeverity("error");
         setTimeout(() => {
           setMensaje('');
@@ -137,7 +126,7 @@ const Login = () => {
               xs: "100%",
               sm: "100%",
               md: "35%",
-              lg: "35%",
+              lg: "40%",
               xl: "40%",
             },
             backgroundColor: "#f9f9f9",
@@ -148,6 +137,7 @@ const Login = () => {
         <Stack
           spacing={1}
           alignItems="center"
+          justifyContent="center"
           flexDirection="column"
           sx={{
             position: "relative",
@@ -158,7 +148,6 @@ const Login = () => {
               lg: "35%",
               xl: "35%",
             },
-            backgroundColor: "#f9f9f9",
             boxShadow: 6,
             padding: {
               xs: "2rem",
@@ -167,6 +156,8 @@ const Login = () => {
               lg: "2rem",
               xl: "2rem"
             },
+            backdropFilter: "blur(30px)",
+            backgroundColor: "rgba(255, 255, 255, 0.10)",
           }}
         >
           <Box>
@@ -181,7 +172,7 @@ const Login = () => {
                   xl: "2.8rem",
                 },
                 textAlign: "center",
-                color: "black",
+                color: "white",
               }}
             >
               Iniciar sesión
@@ -197,7 +188,7 @@ const Login = () => {
                   xl: "1.5rem",
                 },
                 textAlign: "center",
-                color: "black",
+                color: "white",
                 marginBottom: "1.1rem"
               }}
             >
@@ -224,114 +215,6 @@ const Login = () => {
               width: "100%"
             }}
           >
-            <TextField
-              label="Email"
-              variant="standard"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              InputLabelProps={{ required: false }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AlternateEmailIcon style={{ color: "black" }} />
-                  </InputAdornment>
-                )
-              }}
-              sx={{
-                input: { color: "black" },
-                label: { color: "black" },
-                "& label.Mui-focused": { color: "black" },
-                "& .MuiInput-underline:before": {
-                  borderBottomColor: "black"
-                },
-                "& .MuiInput-underline:hover:before": {
-                  borderBottomColor: "black"
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "black"
-                },
-                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
-              }}
-            />
-            <TextField
-              label="Alias"
-              variant="standard"
-              value={alias}
-              onChange={(e) => setAlias(e.target.value)}
-              required
-              InputLabelProps={{ required: false }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircleIcon style={{ color: "black" }} />
-                  </InputAdornment>
-                )
-              }}
-              sx={{
-                input: { color: "black" },
-                label: { color: "black" },
-                "& label.Mui-focused": { color: "black" },
-                "& .MuiInput-underline:before": {
-                  borderBottomColor: "black"
-                },
-                "& .MuiInput-underline:hover:before": {
-                  borderBottomColor: "black"
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "black"
-                },
-                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
-              }}
-            />
-            <TextField
-              label="Código"
-              variant="standard"
-              id="standard-error-helper-text"
-              type={showCodigo ? 'text' : 'password'}
-              value={codigo}
-              onChange={(e) => setCodigo(e.target.value)}
-              required
-              InputLabelProps={{ required: false }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <VpnKeyIcon style={{ color: "black" }} />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={handleToggleShowCodigo}
-                      edge="end"
-                      sx={{
-                        color: "#000", // ahora el ícono será negro
-                        "&:focus": { outline: "none", boxShadow: "none" },
-                        "&:focus-visible": { outline: "none", boxShadow: "none" },
-                      }}
-                    >
-                      {showCodigo ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              sx={{
-                input: { color: 'black' },
-                label: { color: 'black' },
-                '& label.Mui-focused': { color: 'black' },
-                '& .MuiInput-underline:before': {
-                  borderBottomColor: 'black',
-                },
-                '& .MuiInput-underline:hover:before': {
-                  borderBottomColor: 'black',
-                },
-                '& .MuiInput-underline:after': {
-                  borderBottomColor: 'black',
-                },
-                width: { xs: '100%', sm: '100%', md: 250, lg: 250, xl: 280 },
-                marginBottom: "1rem"
-              }}
-            />
             <Button
               type="submit"
               variant="contained"
@@ -346,14 +229,14 @@ const Login = () => {
                   lg: 250,
                   xl: 280
                 },
-                color: "black",
+                color: "white",
                 backgroundColor: "#2485e9",
                 "&:hover": {
                   backgroundColor: "#1f73ca"
                 },
                 "&.Mui-disabled": {
                   backgroundColor: "#1f73ca",
-                  color: "black",
+                  color: "white",
                   opacity: 6
                 }
               }}
@@ -361,36 +244,19 @@ const Login = () => {
             >
               {loading ? "Cargando..." : (
                 <>
-                  <LoginIcon style={{ color: "black", marginRight: "0.7rem" }} />
+                  <LoginIcon style={{ color: "white", marginRight: "0.7rem" }} />
                   Ingresar
                 </>
               )}
             </Button>
             <Button
               component="a"
-              onClick={handleCuentaNueva}
-              color="primary"
-              sx={{
-                fontSize: "1rem",
-                height: 25,
-                width: {
-                  xs: "100%",
-                  sm: "100%",
-                  md: 250,
-                  lg: 250,
-                  xl: 280
-                },
-                color: "black"
-              }}
-            >Nueva cuenta
-            </Button>
-            <Button
-              component="a"
+              variant="outlined"
               onClick={handleRecuperarCodigo}
               color="primary"
               sx={{
                 fontSize: "1rem",
-                height: 25,
+                height: 50,
                 width: {
                   xs: "100%",
                   sm: "100%",
@@ -398,15 +264,37 @@ const Login = () => {
                   lg: 250,
                   xl: 280
                 },
-                color: "black"
+                color: "white",
+                "&:hover": {
+                  color: "white"
+                },
               }}
             >Recuperar código
             </Button>
-            {mensaje && (
-              <Alert variant="filled" severity={severity} sx={{ color: "#ffff", width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }}}>
+            <Snackbar
+              open={Boolean(mensaje)}
+              autoHideDuration={4000}
+              onClose={() => setMensaje(null)}
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+              <Alert
+                onClose={() => setMensaje(null)}
+                variant="filled"
+                severity={severity}
+                sx={{
+                  color: "#ffff",
+                  width: {
+                    xs: "100%",
+                    sm: "100%",
+                    md: 300,
+                    lg: 300,
+                    xl: 280
+                  }
+                }}
+              >
                 {mensaje}
               </Alert>
-            )}
+            </Snackbar>
           </Box>
         </Stack>
       </Box>

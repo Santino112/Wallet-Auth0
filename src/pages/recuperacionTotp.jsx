@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert } from "@mui/material";
+import { Stack, Box, Button, TextField, Typography, InputAdornment } from "@mui/material";
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const recuperacionTotp = () => {
     const navigate = useNavigate();
@@ -50,14 +52,14 @@ const recuperacionTotp = () => {
                 alignItems: "center",
                 minHeight: "100vh",
                 minWidth: "100vw",
-                backgroundImage: 'url(/images/Nuevocodigo.png)',
+                backgroundImage: 'url(/images/fondo2.jpg)',
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
             }}
         >
             <Stack
-                spacing={4}
+                spacing={5}
                 sx={{
                     width: {
                         xs: "100%",
@@ -73,7 +75,7 @@ const recuperacionTotp = () => {
                         lg: "auto",
                         xl: "auto"
                     },
-                    backdropFilter: "blur(5px)",
+                    backdropFilter: "blur(30px)",
                     backgroundColor: "rgba(255, 255, 255, 0.10)",
                     boxShadow: "0 1px 12px rgba(25, 25, 25, 0.8)",
                     borderRadius: 2,
@@ -88,7 +90,7 @@ const recuperacionTotp = () => {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
+                                boxShadow: 4,
                                 width: "100%",
                                 height: "12%",
                                 textAlign: "center"
@@ -114,21 +116,43 @@ const recuperacionTotp = () => {
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                width: "100%",
+                                justifyContent: "center",
+                                width: {
+                                    xs: "100%",
+                                    sm: "100%",
+                                    md: "35%",
+                                    lg: "35%",
+                                    xl: "35%",
+                                },
                                 height: "100%",
-                                gap: 5
+                                gap: 3
                             }}
                         >
-                            <Box sx={{ width: { xs: "90%", sm: "70%", md: "50%" } }}>
+                            <Box sx={{
+                                width: {
+                                    xs: "100%",
+                                    sm: "100%",
+                                    md: "35%",
+                                    lg: "35%",
+                                    xl: "35%",
+                                },
+                            }}>
                                 <TextField
                                     label="Alias"
                                     type="text"
-                                    variant="outlined"
+                                    variant="standard"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     InputLabelProps={{ required: false }}
                                     required
                                     fullWidth
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <AccountCircleIcon style={{ color: "white" }} />
+                                            </InputAdornment>
+                                        )
+                                    }}
                                     sx={{
                                         mb: 3,
                                         input: { color: "white" },
@@ -139,18 +163,26 @@ const recuperacionTotp = () => {
                                             "&:hover fieldset": { borderColor: "white" },
                                             "&.Mui-focused fieldset": { borderColor: "white" }
                                         },
+                                        width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
                                     }}
                                 />
 
                                 <TextField
                                     label="Email"
                                     type="text"
-                                    variant="outlined"
+                                    variant="standard"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     InputLabelProps={{ required: false }}
                                     required
                                     fullWidth
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <AlternateEmailIcon style={{ color: "white" }} />
+                                            </InputAdornment>
+                                        )
+                                    }}
                                     sx={{
                                         mb: 3,
                                         input: { color: "white" },
@@ -161,13 +193,14 @@ const recuperacionTotp = () => {
                                             "&:hover fieldset": { borderColor: "white" },
                                             "&.Mui-focused fieldset": { borderColor: "white" }
                                         },
+                                        width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
                                     }}
                                 />
 
                                 <Stack
-                                    spacing={2}
-                                    direction={{ xs: "column", sm: "column", md: "row" }}
-                                    sx={{ mt: 2 }}
+                                    spacing={3}
+                                    direction={{ xs: "column", sm: "column", md: "row", lg: "row,", xl: "row" }}
+                                    sx={{ mt: 2, width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 } }}
                                 >
                                     <Button
                                         variant="contained"
@@ -184,16 +217,23 @@ const recuperacionTotp = () => {
                                                 lg: "50%",
                                                 xl: "50%",
                                             },
-                                            backgroundColor: "#74c69d",
+                                            color: "white",
+                                            backgroundColor: "#2485e9",
                                             "&:hover": {
-                                                backgroundColor: "#52b788"
-                                            }
+                                                backgroundColor: "#1f73ca"
+                                            },
+                                            "&.Mui-disabled": {
+                                                backgroundColor: "#1f73ca",
+                                                color: "white",
+                                                opacity: 6
+                                            },
+                                            width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
                                         }}
                                     >
                                         {loading ? "Cargando..." : "Generar"}
                                     </Button>
                                     <Button
-                                        variant="contained"
+                                        variant="outlined"
                                         component="a"
                                         onClick={handleLogin}
                                         color="primary"
@@ -207,15 +247,14 @@ const recuperacionTotp = () => {
                                                 lg: "50%",
                                                 xl: "50%",
                                             },
-                                            backgroundColor: "#d8f3dc",
+                                            color: "white",
                                             "&:hover": {
-                                                backgroundColor: "#b7e4c7",
-                                                color: "#000"
-                                            }
+                                                color: "white"
+                                            },
+                                            width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
                                         }}
                                     >Volver
                                     </Button>
-
                                 </Stack>
                             </Box>
                         </Box>
