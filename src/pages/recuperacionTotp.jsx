@@ -56,6 +56,7 @@ const recuperacionTotp = () => {
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
+                padding: 2
             }}
         >
             <Stack
@@ -80,7 +81,7 @@ const recuperacionTotp = () => {
                     boxShadow: "0 1px 12px rgba(25, 25, 25, 0.8)",
                     borderRadius: 2,
                     py: 6,
-                    px: { xs: 2, sm: 4 }
+                    px: { xs: 1, sm: 3 }
                 }}
             >
                 {!totpSetup ? (
@@ -92,7 +93,6 @@ const recuperacionTotp = () => {
                                 justifyContent: "center",
                                 boxShadow: 4,
                                 width: "100%",
-                                height: "12%",
                                 textAlign: "center"
                             }}
                         >
@@ -117,25 +117,17 @@ const recuperacionTotp = () => {
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                width: {
-                                    xs: "100%",
-                                    sm: "100%",
-                                    md: "35%",
-                                    lg: "35%",
-                                    xl: "35%",
-                                },
-                                height: "100%",
-                                gap: 3
+                                width: "auto",
+                                mx: "auto",
+                                height: "100%"
                             }}
                         >
                             <Box sx={{
-                                width: {
-                                    xs: "100%",
-                                    sm: "100%",
-                                    md: "35%",
-                                    lg: "35%",
-                                    xl: "35%",
-                                },
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                mx: "auto"
                             }}>
                                 <TextField
                                     label="Alias"
@@ -154,7 +146,7 @@ const recuperacionTotp = () => {
                                         )
                                     }}
                                     sx={{
-                                        mb: 3,
+                                        mb: 3.5,
                                         input: { color: "white" },
                                         label: { color: "white" },
                                         "& label.Mui-focused": { color: "white" },
@@ -163,7 +155,7 @@ const recuperacionTotp = () => {
                                             "&:hover fieldset": { borderColor: "white" },
                                             "&.Mui-focused fieldset": { borderColor: "white" }
                                         },
-                                        width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
+                                        width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
                                     }}
                                 />
 
@@ -193,14 +185,14 @@ const recuperacionTotp = () => {
                                             "&:hover fieldset": { borderColor: "white" },
                                             "&.Mui-focused fieldset": { borderColor: "white" }
                                         },
-                                        width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
+                                        width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
                                     }}
                                 />
 
                                 <Stack
-                                    spacing={3}
+                                    spacing={2}
                                     direction={{ xs: "column", sm: "column", md: "row", lg: "row,", xl: "row" }}
-                                    sx={{ mt: 2, width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 } }}
+                                    sx={{ mt: 2, width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 } }}
                                 >
                                     <Button
                                         variant="contained"
@@ -209,7 +201,7 @@ const recuperacionTotp = () => {
                                         disabled={loading}
                                         sx={{
                                             fontSize: "1rem",
-                                            height: 50,
+                                            height: 45,
                                             width: {
                                                 xs: "100%",
                                                 sm: "100%",
@@ -227,7 +219,7 @@ const recuperacionTotp = () => {
                                                 color: "white",
                                                 opacity: 6
                                             },
-                                            width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
+                                            width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
                                         }}
                                     >
                                         {loading ? "Cargando..." : "Generar"}
@@ -239,7 +231,7 @@ const recuperacionTotp = () => {
                                         color="primary"
                                         sx={{
                                             fontSize: "1rem",
-                                            height: 50,
+                                            height: 45,
                                             width: {
                                                 xs: "100%",
                                                 sm: "100%",
@@ -249,9 +241,9 @@ const recuperacionTotp = () => {
                                             },
                                             color: "white",
                                             "&:hover": {
-                                                color: "white"
+                                                color: "white",
                                             },
-                                            width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 280 }
+                                            width: { xs: 290, sm: 290, md: 250, lg: 280, xl: 300}
                                         }}
                                     >Volver
                                     </Button>

@@ -10,6 +10,14 @@ const Login = () => {
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const {
+    loginWithRedirect,
+    isAuthenticated,
+    user,
+    getAccessTokenSilently,
+    getIdTokenClaims,
+  } = useAuth0();
+
   const navigate = useNavigate();
 
   const handleToggleShowCodigo = () => {
@@ -23,11 +31,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const data = {
-      username: alias,
-      totpToken: codigo,
-    };
 
     try {
       const response = await axios.post('https://raulocoin.onrender.com/api/user-details', data);
