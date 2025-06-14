@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Stack, Box, Button, TextField, Typography, Input } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const VerifyAccount = () => {
     const location = useLocation();
     const [alias, setAlias] = useState(location.state?.alias || '');
     const [codigo, setCodigo] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showCodigo, setShowCodigo] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        navigate('/Login');
+    const handleToggleShowCodigo = () => {
+        setShowCodigo((prev) => !prev);
+    };
+
+    const handleRecuperarCodigo = () => {
+        navigate('/recuperacionTotp');
     };
 
     const handleSubmit = async (e) => {
@@ -64,14 +72,15 @@ const VerifyAccount = () => {
                     alignItems: "center",
                     minHeight: "100vh",
                     minWidth: "100vw",
-                    backgroundImage: 'url(/images/Verificar.png)',
+                    backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
+                    padding: 2
                 }}
             >
                 <Stack
-                    spacing={3}
+                    spacing={4}
                     alignItems="center"
                     sx={{
                         width: {
@@ -81,6 +90,19 @@ const VerifyAccount = () => {
                             lg: "auto",
                             xl: "auto",
                         },
+                        height: {
+                            xs: "100%",
+                            sm: "100%",
+                            md: "auto",
+                            lg: "auto",
+                            xl: "auto"
+                        },
+                        backdropFilter: "blur(30px)",
+                        backgroundColor: "rgba(255, 255, 255, 0.10)",
+                        borderRadius: 2,
+                        py: 4,
+                        px: { xs: 1, sm: 3 },
+                        width: { xs: 350, sm: 350, md: 400, lg: 450, xl: 470 }
                     }}
                 >
                     <Box>
@@ -88,13 +110,21 @@ const VerifyAccount = () => {
                             variant="h1"
                             sx={{
                                 fontSize: {
-                                    xs: "2.5rem",
-                                    sm: "2rem",
-                                    md: "2rem",
-                                    lg: "2rem",
-                                    xl: "2.8rem",
+                                    xs: "1.7rem",
+                                    sm: "1.7rem",
+                                    md: "1.6rem",
+                                    lg: "1.6rem",
+                                    xl: "2rem",
                                 },
                                 textAlign: "center",
+                                boxShadow: 4,
+                                marginBottom: {
+                                    xs: "1rem",
+                                    sm: "1rem",
+                                    md: "1rem",
+                                    lg: "0.7rem",
+                                    xl: "0.7rem"
+                                }
                             }}
                         >
                             Verifica tu cuenta
@@ -103,10 +133,10 @@ const VerifyAccount = () => {
                             variant="body1"
                             sx={{
                                 fontSize: {
-                                    xs: "1rem",
-                                    sm: "1rem",
+                                    xs: "1.3rem",
+                                    sm: "1.3rem",
                                     md: "1.2rem",
-                                    lg: "1.5rem",
+                                    lg: "1.3rem",
                                     xl: "1.5rem",
                                 },
                                 textAlign: "center",
@@ -120,27 +150,28 @@ const VerifyAccount = () => {
                         onSubmit={handleSubmit}
                         sx={{
                             display: "flex",
-                            flexDirection: {
-                                xs: "column",
-                                sm: "column",
-                                md: "row",
-                                lg: "row",
-                                xl: "row",
-                            },
+                            flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
-                            flexWrap: "wrap",
-                            gap: 2,
+                            mx: "auto",
+                            gap: 3
                         }}
                     >
                         <TextField
                             type="text"
                             label="Alias"
-                            variant="outlined"
-                            disabled
+                            variant="standard"
+                            value={alias}
                             onChange={(e) => setAlias(e.target.value)}
                             required
                             InputLabelProps={{ required: false }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <AccountCircleIcon style={{ color: "white" }} />
+                                    </InputAdornment>
+                                )
+                            }}
                             sx={{
                                 input: { color: "white" },
                                 label: { color: "white" },
@@ -156,17 +187,47 @@ const VerifyAccount = () => {
                                         borderColor: "white",
                                     },
                                 },
-                                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                             }}
                         />
                         <TextField
-                            type="number"
-                            label="Codigo TOTP"
-                            variant="outlined"
+                            type={showCodigo ? 'password' : 'text'}
+                            label="Código TOTP"
+                            variant="standard"
                             value={codigo}
                             onChange={(e) => setCodigo(e.target.value)}
                             required
                             InputLabelProps={{ required: false }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <VpnKeyIcon sx={{ color: "white" }} />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={handleToggleShowCodigo}
+                                            edge="end"
+                                            sx={{
+                                                color: "#ffff",
+                                                outline: "focus",
+                                                boxShadow: "none",
+                                                "&:focus": {
+                                                    outline: "none",
+                                                    boxShadow: "none"
+                                                },
+                                                "&:focus-visible": {
+                                                    outline: "none",
+                                                    boxShadow: "none"
+                                                }
+                                            }}
+                                        >
+                                            {showCodigo ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                             sx={{
                                 input: { color: "white" },
                                 label: { color: "white" },
@@ -182,25 +243,13 @@ const VerifyAccount = () => {
                                         borderColor: "white",
                                     },
                                 },
-                                width: { xs: "100%", sm: "100%", md: 250, lg: 250, xl: 255 }
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                             }}
                         />
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: {
-                                    xs: "column",
-                                    sm: "column",
-                                    md: "row",
-                                    lg: "row",
-                                    xl: "row",
-                                },
-                                alignItems: "center",
-                                marginTop: "1rem",
-                                gap: 2,
-                                width: "100%",
-                                justifyContent: "center",
-                            }}
+
+                        <Stack
+                            direction={{ xs: "column", sm: "column", md: "row", lg: "row,", xl: "row" }}
+                            sx={{ mt: 2, width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
                         >
                             <Button
                                 type="submit"
@@ -209,47 +258,67 @@ const VerifyAccount = () => {
                                 disabled={loading}
                                 sx={{
                                     fontSize: "1rem",
-                                    height: 50,
+                                    height: 45,
                                     width: {
                                         xs: "100%",
                                         sm: "100%",
-                                        md: "30%",
-                                        lg: "25%",
-                                        xl: "25%",
+                                        md: "50%",
+                                        lg: "50%",
+                                        xl: "50%",
                                     },
-                                    backgroundColor: "#74c69d",
+                                    marginRight: {
+                                        xs: 0,
+                                        sm: 0,
+                                        md: "1rem",
+                                        lg: "1.5rem",
+                                        xl: 0
+                                    },
+                                    marginBottom: {
+                                        xs: "1.3rem",
+                                        sm: "1.3rem",
+                                        md: 0,
+                                        lg: 0,
+                                        xl: 0
+                                    },
+                                    color: "white",
+                                    backgroundColor: "#2485e9",
                                     "&:hover": {
-                                        backgroundColor: "#52b788"
-                                    }
+                                        backgroundColor: "#1f73ca"
+                                    },
+                                    "&.Mui-disabled": {
+                                        backgroundColor: "#1f73ca",
+                                        color: "white",
+                                    },
+                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                 }}
                                 disableElevation
                             >
                                 {loading ? "Cargando..." : "Verificar"}
                             </Button>
                             <Button
-                                variant="contained"
+                                variant="outlined"
                                 component="a"
-                                onClick={handleLogin}
+                                onClick={handleRecuperarCodigo}
                                 color="primary"
                                 sx={{
                                     fontSize: "1rem",
-                                    height: 50,
+                                    height: 45,
                                     width: {
                                         xs: "100%",
                                         sm: "100%",
-                                        md: "30%",
-                                        lg: "20%",
-                                        xl: "20%",
+                                        md: "50%",
+                                        lg: "50%",
+                                        xl: "50%",
                                     },
-                                    backgroundColor: "#d8f3dc",
+                                    color: "white",
                                     "&:hover": {
-                                        backgroundColor: "#b7e4c7",
-                                        color: "#000"
-                                    }
+                                        color: "white",
+                                    },
+                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                 }}
-                            > Volver a login
+                            > Recuperar TOTP
                             </Button>
-                        </Box>
+                        </Stack>
                     </Box>
                 </Stack>
             </Box>
