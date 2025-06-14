@@ -190,7 +190,6 @@ const recuperacionTotp = () => {
                                 />
 
                                 <Stack
-                                    spacing={2}
                                     direction={{ xs: "column", sm: "column", md: "row", lg: "row,", xl: "row" }}
                                     sx={{ mt: 2, width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 } }}
                                 >
@@ -209,6 +208,20 @@ const recuperacionTotp = () => {
                                                 lg: "50%",
                                                 xl: "50%",
                                             },
+                                            marginRight: {
+                                                xs: 0,
+                                                sm: 0,
+                                                md: "1rem",
+                                                lg: "1.5rem",
+                                                xl: 0
+                                            },
+                                            marginBottom: {
+                                                xs: "1.5rem",
+                                                sm: "1.5rem",
+                                                md: 0,
+                                                lg: 0,
+                                                xl: 0
+                                            },
                                             color: "white",
                                             backgroundColor: "#2485e9",
                                             "&:hover": {
@@ -217,7 +230,6 @@ const recuperacionTotp = () => {
                                             "&.Mui-disabled": {
                                                 backgroundColor: "#1f73ca",
                                                 color: "white",
-                                                opacity: 6
                                             },
                                             width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
                                         }}

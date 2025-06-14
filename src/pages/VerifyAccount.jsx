@@ -137,7 +137,6 @@ const VerifyAccount = () => {
                             type="text"
                             label="Alias"
                             variant="outlined"
-                            value={alias}
                             disabled
                             onChange={(e) => setAlias(e.target.value)}
                             required

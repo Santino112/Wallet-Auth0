@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Stack, Box, Button, TextField, Typography } from '@mui/material';
 
@@ -11,11 +11,12 @@ const Totp = () => {
     navigate('/Login');
   };
 
-  if (!totpSetup) {
-    message.warning('No hay configuración TOTP. Regístrate primero.');
-    navigate('/');
-    return null;
-  }
+  useEffect(() => {
+    if (!totpSetup) {
+      alert('No hay configuración TOTP. Regístrate primero.');
+      navigate('/');
+    }
+  }, [totpSetup, navigate]);
 
   return (
     <Box

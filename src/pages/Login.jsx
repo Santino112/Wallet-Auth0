@@ -11,6 +11,7 @@ const Login = () => {
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const navigate = useNavigate();
 
   const handleToggleShowCodigo = () => {
     setShowCodigo((prev) => !prev);
@@ -19,8 +20,6 @@ const Login = () => {
   const handleRecuperarCodigo = () => {
     navigate('/recuperacionTotp');
   };
-
-  const navigate = useNavigate();
 
   //Definicion de dependencias de Auth0
   const {
@@ -35,7 +34,12 @@ const Login = () => {
   const auth0Authenticate = async (data) => {
     try {
       const res = await axios.post(`https://raulocoin.onrender.com/api/auth0/authenticate`, data)
-      return res.data;
+      const response = res.data;
+
+      if (response.success === true){
+        navigate('/verify-account');
+        return response;
+      }
     } catch {
       console.log("Error en la autenticación");
       return null;
@@ -95,7 +99,6 @@ const Login = () => {
         console.error("Error en el login:", error);
       }
     };
-
     fetchTokens();
   }, [isAuthenticated, navigate, getAccessTokenSilently, getIdTokenClaims, user]);
 
