@@ -11,14 +11,6 @@ const Login = () => {
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const {
-    loginWithRedirect,
-    isAuthenticated,
-    user,
-    getAccessTokenSilently,
-    getIdTokenClaims,
-  } = useAuth0();
-  const navigate = useNavigate();
 
   const handleToggleShowCodigo = () => {
     setShowCodigo((prev) => !prev);
@@ -28,8 +20,30 @@ const Login = () => {
     navigate('/recuperacionTotp');
   };
 
+  const navigate = useNavigate();
+
+  //Definicion de dependencias de Auth0
+  const {
+    isAuthenticated,
+    user,
+    getAccessTokenSilently,
+    getIdTokenClaims,
+    loginWithRedirect,
+  } = useAuth0();
+
+  //Llamada al endpoint de autenticación
+  const auth0Authenticate = async (data) => {
+    try {
+      const res = await axios.post(`https://raulocoin.onrender.com/api/auth0/authenticate`, data)
+      return res.data;
+    } catch {
+      console.log("Error en la autenticación");
+      return null;
+    }
+  };
+
+  //Funcion de login
   const handleLoginClick = () => {
-    setHasInitiatedLogin(true);
     loginWithRedirect({
       authorizationParams: {
         prompt: 'login',
@@ -37,14 +51,17 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  useEffect(() => {
+    console.log("🟡 useEffect disparado");
+    console.log("isAuthenticated:", isAuthenticated);
+    console.log("user:", user);
+    const fetchTokens = async () => {
+      try {
+        if (!isAuthenticated || !user) return;
 
-    try {
-      if (isAuthenticated && user) {
         const accessToken = await getAccessTokenSilently();
         const idTokenClaims = await getIdTokenClaims();
+
         const data = {
           auth0_payload: {
             iss: idTokenClaims.iss,
@@ -60,29 +77,27 @@ const Login = () => {
             id_token: idTokenClaims.__raw,
           },
         };
-        const response = await auth0Authenticate(data);
-        console.log("Respuesta del backend:", response);
-      } else {
-        setMensaje("No estás autenticado.");
-        setSeverity("error");
-      }
-    } catch (error) {
-      console.error("Error en el login:", error);
-      setMensaje("Error al autenticar.");
-      setSeverity("error");
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const auth0Authenticate = async (data) => {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/auth0/authenticate`, data);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+        const res = await auth0Authenticate(data);
+        console.log("✅ Respuesta del backend:", res);
+
+        localStorage.setItem('userData', JSON.stringify({
+          name: res.user.name,
+          username: res.user.username,
+          email: res.user.email,
+          balance: res.user.balance,
+          isVerified: res.user.isVerified,
+          totpVerified: res.user.totpVerified,
+          needsTotpSetup: res.needsTotpSetup,
+          existingUser: res.existingUser
+        }));
+      } catch (error) {
+        console.error("Error en el login:", error);
+      }
+    };
+
+    fetchTokens();
+  }, [isAuthenticated, navigate, getAccessTokenSilently, getIdTokenClaims, user]);
 
   return (
     <Box
@@ -122,6 +137,7 @@ const Login = () => {
           sm: "1rem"
         }
       }}>
+        <Box></Box>
         <Box
           component="img"
           alt="RauloCoinImage"
@@ -202,7 +218,6 @@ const Login = () => {
           </Box>
           <Box
             component="form"
-            onSubmit={handleSubmit}
             sx={{
               display: "flex",
               flexDirection: {
