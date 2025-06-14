@@ -5,6 +5,7 @@ import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton }
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const VerifyAccount = () => {
     const location = useLocation();
@@ -12,6 +13,7 @@ const VerifyAccount = () => {
     const [codigo, setCodigo] = useState('');
     const [loading, setLoading] = useState(false);
     const [showCodigo, setShowCodigo] = useState(false);
+    const { logout } = useAuth0();
     const navigate = useNavigate();
 
     const handleToggleShowCodigo = () => {
@@ -271,7 +273,7 @@ const VerifyAccount = () => {
                                         sm: 0,
                                         md: "1rem",
                                         lg: "1.5rem",
-                                        xl: 0
+                                        xl: "1.5rem"
                                     },
                                     marginBottom: {
                                         xs: "1.3rem",
@@ -318,6 +320,49 @@ const VerifyAccount = () => {
                                 }}
                             > Recuperar TOTP
                             </Button>
+                             <Button
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                                onClick={() => logout({ returnTo: window.location.origin })}
+                                disabled={loading}
+                                sx={{
+                                    fontSize: "1rem",
+                                    height: 45,
+                                    width: {
+                                        xs: "100%",
+                                        sm: "100%",
+                                        md: "50%",
+                                        lg: "50%",
+                                        xl: "50%",
+                                    },
+                                    marginRight: {
+                                        xs: 0,
+                                        sm: 0,
+                                        md: "1rem",
+                                        lg: "1.5rem",
+                                        xl: "1.5rem"
+                                    },
+                                    marginBottom: {
+                                        xs: "1.3rem",
+                                        sm: "1.3rem",
+                                        md: 0,
+                                        lg: 0,
+                                        xl: 0
+                                    },
+                                    color: "white",
+                                    backgroundColor: "#2485e9",
+                                    "&:hover": {
+                                        backgroundColor: "#1f73ca"
+                                    },
+                                    "&.Mui-disabled": {
+                                        backgroundColor: "#1f73ca",
+                                        color: "white",
+                                    },
+                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
+                                }}
+                                disableElevation
+                            ></Button>
                         </Stack>
                     </Box>
                 </Stack>

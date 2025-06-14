@@ -213,7 +213,7 @@ const recuperacionTotp = () => {
                                                 sm: 0,
                                                 md: "1rem",
                                                 lg: "1.5rem",
-                                                xl: 0
+                                                xl: "1.5rem"
                                             },
                                             marginBottom: {
                                                 xs: "1.5rem",
@@ -373,7 +373,7 @@ const recuperacionTotp = () => {
                                                 color: "#000"
                                             }
                                         }}
-                                    >Volver al login
+                                    >Volver a verificar
                                     </Button>
                                 </Stack>
                             </Box>

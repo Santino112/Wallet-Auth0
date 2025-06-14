@@ -6,11 +6,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import axios from "axios";
+import { useAuth0 } from '@auth0/auth0-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Account = () => {
   const { name, username, balance } = JSON.parse(localStorage.getItem("datosLogin"))
   const [codigo, setCodigo] = useState("");
+  const { logout } = useAuth0();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -119,7 +121,7 @@ const Account = () => {
             }} disableElevation>
               Transferir
             </Button>
-            <Button variant="contained" onClick={handleLogout} sx={{
+            <Button variant="contained" onClick={() => logout({ returnTo: window.location.origin })} sx={{
               cursor: "pointer",
               fontSize: "1rem",
               backgroundColor: "#d8f3dc",

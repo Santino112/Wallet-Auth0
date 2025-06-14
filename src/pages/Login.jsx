@@ -36,11 +36,7 @@ const Login = () => {
       const res = await axios.post(`https://raulocoin.onrender.com/api/auth0/authenticate`, data)
       const response = res.data;
 
-      if (response.success) {
-        localStorage.setItem("datosLogin", JSON.stringify({
-          name: response.user.name,
-          username: response.user.username,
-        }));
+      if (response.user.isVerified === false && response.user.totpVerified === false) {
         navigate('/verify-account');
         return response;
       }
@@ -88,7 +84,7 @@ const Login = () => {
 
         const res = await auth0Authenticate(data);
         console.log("✅ Respuesta del backend:", res);
-
+        
         localStorage.setItem('userData', JSON.stringify({
           name: res.user.name,
           username: res.user.username,
