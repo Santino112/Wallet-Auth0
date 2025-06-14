@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton, Alert, Snackbar } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Login = () => {
   const [showCodigo, setShowCodigo] = useState(false);
@@ -17,7 +18,6 @@ const Login = () => {
     getAccessTokenSilently,
     getIdTokenClaims,
   } = useAuth0();
-
   const navigate = useNavigate();
 
   const handleToggleShowCodigo = () => {
@@ -28,57 +28,59 @@ const Login = () => {
     navigate('/recuperacionTotp');
   };
 
+  const handleLoginClick = () => {
+    setHasInitiatedLogin(true);
+    loginWithRedirect({
+      authorizationParams: {
+        prompt: 'login',
+      },
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await axios.post('https://raulocoin.onrender.com/api/user-details', data);
-      const res = response.data;
-
-      if (res.success && res.user) {
-        setMensaje("Datos ingresados correctos");
-        setSeverity("success");
-        setTimeout(() => {
-          setMensaje('');
-          setOpen(true);
-          navigate('/account');
-        }, 2000);
-        localStorage.setItem("datosLogin", JSON.stringify({
-          name: res.user.name,
-          username: res.user.username,
-          balance: res.user.balance,
-          token: data.totpToken
-        }));
-
+      if (isAuthenticated && user) {
+        const accessToken = await getAccessTokenSilently();
+        const idTokenClaims = await getIdTokenClaims();
+        const data = {
+          auth0_payload: {
+            iss: idTokenClaims.iss,
+            sub: idTokenClaims.sub,
+            aud: idTokenClaims.aud,
+            iat: idTokenClaims.iat,
+            exp: idTokenClaims.exp,
+            email: user.email,
+            name: user.name,
+          },
+          auth0_tokens: {
+            access_token: accessToken,
+            id_token: idTokenClaims.__raw,
+          },
+        };
+        const response = await auth0Authenticate(data);
+        console.log("Respuesta del backend:", response);
       } else {
-        setMensaje("Error en los datos ingresados");
+        setMensaje("No estás autenticado.");
         setSeverity("error");
-        setTimeout(() => {
-          setMensaje('');
-        }, 5000);
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.status === 403 &&
-        error.response.data.message === "Debes completar la verificación TOTP para acceder a los detalles del usuario"
-      ) {
-        navigate('/verify-account', {
-          state: { alias },
-        });
-      } else {
-        setMensaje("Error en los datos ingresados");
-        setSeverity("error");
-        setTimeout(() => {
-          setMensaje('');
-        }, 3000);
-      }
+      console.error("Error en el login:", error);
+      setMensaje("Error al autenticar.");
+      setSeverity("error");
     } finally {
       setLoading(false);
-      setEmail("");
-      setAlias("");
-      setCodigo("");
+    }
+  };
+
+  const auth0Authenticate = async (data) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth0/authenticate`, data);
+      return response.data;
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -98,10 +100,10 @@ const Login = () => {
         alignItems: "center",
         minHeight: "100vh",
         minWidth: "100vw",
-        backgroundImage: 'url(/images/fondo2.jpg)',
+        backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center"
+        backgroundPosition: "center",
       }}
     >
       <Box sx={{
@@ -219,9 +221,10 @@ const Login = () => {
             }}
           >
             <Button
-              type="submit"
+              type="primary"
               variant="contained"
               disabled={loading}
+              onClick={handleLoginClick}
               sx={{
                 fontSize: "1rem",
                 height: 50,
