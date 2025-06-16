@@ -1,27 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, TextField } from '@mui/material';
+import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, TextField, Menu, MenuItem, ListItemIcon, Avatar, Divider } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
+
 import axios from "axios";
 import { useAuth0 } from '@auth0/auth0-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Account = () => {
-  const { name, username, balance } = JSON.parse(localStorage.getItem("datosLogin"))
+  const { name, username, balance } = JSON.parse(localStorage.getItem("userData"))
   const [codigo, setCodigo] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   const { logout } = useAuth0();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    navigate('/');
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const transferir = () => {
     navigate('/transfer')
-  }
+  };
+
+  const perfilUsuario = () => {
+    navigate('/perfilUsuario')
+  };
+
+  const movimientos = () => {
+    navigate('/movimientos')
+  };
+
 
   const [transactions, setTransactions] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -71,19 +89,73 @@ const Account = () => {
         <Stack
           direction="row"
           sx={{
-            width: { xs: "100%", sm: "100%", md: 300, lg: 400, xl: 500 },
+            width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 500 },
             backgroundColor: "#212121",
             p: 3,
             borderRadius: 2,
-            height: "auto",
             justifyContent: "center",
-            height: "auto",
+            height: {
+              xs: "auto",
+              sm: "auto",
+              md: 500,
+              lg: 500,
+              xl: 500
+            },
             backdropFilter: "blur(30px)",
             backgroundColor: "rgba(255, 255, 255, 0.10)",
             boxShadow: 6,
           }}
         >
           <Stack spacing={4} direction="column" sx={{ width: "100%", color: "white" }}>
+            <Stack spacing={4} direction="row" justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
+              <Avatar alt="Travis Howard" src="/images/imagenPerfil.png" sx={{ width: 50, height: 50 }} />
+              <Button id="basic-button" onClick={handleClick} sx={{
+                cursor: "pointer",
+                fontSize: "1rem",
+                color: "white",
+                "&:hover": {
+                  color: "white"
+                },
+                "&:focus": {
+                  outline: "none",
+                },
+                "&:focus-visible": {
+                  outline: "none",
+                },
+              }} disableElevation>
+                <MenuIcon fontSize="large" />
+              </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                slotProps={{
+                  list: {
+                    'aria-labelledby': 'basic-button',
+                  },
+                }}
+              >
+                <MenuItem onClick={() => {
+                  handleClose();
+                  perfilUsuario();
+                }}>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  Perfil
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={() => {
+                  handleClose();
+                  logout({ returnTo: window.location.origin });
+                }}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                  </ListItemIcon>
+                  Cerrar sesión
+                </MenuItem>
+              </Menu>
+            </Stack>
             <Typography variant="body1" sx={{
               fontSize: {
                 xs: "1.7rem",
@@ -123,29 +195,9 @@ const Account = () => {
               "&.Mui-disabled": {
                 backgroundColor: "#1f73ca",
                 color: "white",
-              }
+              },
             }} disableElevation>
               Transferir
-            </Button>
-            <Button variant="outlined" sx={{
-              cursor: "pointer",
-              fontSize: "1rem",
-              color: "white",
-              "&:hover": {
-                color: "white"
-              },
-            }} disableElevation>
-               Perfil de usuario
-            </Button>
-            <Button variant="outlined" onClick={() => logout({ returnTo: window.location.origin })} sx={{
-              cursor: "pointer",
-              fontSize: "1rem",
-              color: "white",
-              "&:hover": {
-                color: "white"
-              },
-            }} disableElevation>
-              <LogoutIcon fontSize="medium" sx={{ marginRight: "0.3rem" }} />Logout
             </Button>
           </Stack>
         </Stack>
@@ -153,8 +205,14 @@ const Account = () => {
           spacing={2}
           direction="column"
           sx={{
-            width: { xs: "100%", sm: "100%", md: 400, lg: 500, xl: 600 },
-            height: 500,
+            width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 600 },
+            height: {
+              xs: "auto",
+              sm: "auto",
+              md: 500,
+              lg: 500,
+              xl: 500
+            },
             overflowY: "auto",
             backgroundColor: "#121212",
             p: 3,
@@ -183,7 +241,7 @@ const Account = () => {
               InputLabelProps={{ required: false }}
               sx={{ flexGrow: 1, width: "100px", color: "white" }}
             />
-            <Button variant="outlined" type="submit" sx={{
+            <Button variant="outlined" type="submit" onClick={movimientos} sx={{
               cursor: "pointer",
               fontSize: "1rem",
               color: "white",

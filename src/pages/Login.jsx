@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   const handleRecuperarCodigo = () => {
-    navigate('/recuperacionTotp');
+    navigate('/recuperacionTotp'), {state: {from: "login"}};
   };
 
   //Definicion de dependencias de Auth0
@@ -34,12 +34,7 @@ const Login = () => {
   const auth0Authenticate = async (data) => {
     try {
       const res = await axios.post(`https://raulocoin.onrender.com/api/auth0/authenticate`, data)
-      const response = res.data;
-
-      if (response.user.isVerified === false && response.user.totpVerified === false) {
-        navigate('/verify-account');
-        return response;
-      }
+      return res.data;
     } catch {
       console.log("Error en la autenticación");
       return null;
@@ -65,7 +60,7 @@ const Login = () => {
 
         const accessToken = await getAccessTokenSilently();
         const idTokenClaims = await getIdTokenClaims();
-
+        console.log("email_verified:", idTokenClaims.email_verified)
         const data = {
           auth0_payload: {
             iss: idTokenClaims.iss,
@@ -84,7 +79,7 @@ const Login = () => {
 
         const res = await auth0Authenticate(data);
         console.log("✅ Respuesta del backend:", res);
-        
+
         localStorage.setItem('userData', JSON.stringify({
           name: res.user.name,
           username: res.user.username,
@@ -95,6 +90,12 @@ const Login = () => {
           needsTotpSetup: res.needsTotpSetup,
           existingUser: res.existingUser
         }));
+
+        if (!res.user.totpVerified) {
+          navigate("/verify-account")
+        } else {
+          navigate("/account")
+        }
       } catch (error) {
         console.error("Error en el login:", error);
       }

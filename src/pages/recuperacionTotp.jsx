@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Stack, Box, Button, TextField, Typography, InputAdornment } from "@mui/material";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const recuperacionTotp = () => {
-    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [totpSetup, setTotpSetup] = useState(null);
     const [loading, setLoading] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from;
+    const textButton = from === "verify-account" ? "Volver a verificar" : "Volver a inicio"
+
+    const handleVolver = () => {
+        if (from === "verify-account") {
+            navigate("/verify-account");
+        } else {
+            navigate("/Login")
+        }
+    };
 
     const handleLogin = () => {
-        navigate('/Login');
+        navigate("/Login")
     };
-    
+
     const data = {
         username: username,
         email: email
-    }
+    };
 
     const handleRecuperar = async (e) => {
         e.preventDefault();
@@ -356,7 +367,7 @@ const recuperacionTotp = () => {
                                     <Button
                                         variant="contained"
                                         component="a"
-                                        onClick={handleLogin}
+                                        onClick={handleVolver}
                                         color="primary"
                                         sx={{
                                             fontSize: "1rem",
@@ -379,7 +390,8 @@ const recuperacionTotp = () => {
                                                 color: "white",
                                             },
                                         }}
-                                    >Volver a verificar
+                                    >
+                                        {textButton}
                                     </Button>
                                 </Stack>
                             </Box>

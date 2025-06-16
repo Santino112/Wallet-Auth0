@@ -21,7 +21,7 @@ const VerifyAccount = () => {
     };
 
     const handleRecuperarCodigo = () => {
-        navigate('/recuperacionTotp');
+        navigate('/recuperacionTotp'), {state: {from: "verify-account"}};
     };
 
     const handleSubmit = async (e) => {
@@ -42,6 +42,15 @@ const VerifyAccount = () => {
                 const userRes = userResponse.data;
 
                 if (userRes.success && userRes.user) {
+                    localStorage.setItem("userData", JSON.stringify({
+                        id: userRes.user.id,
+                        name: userRes.user.name,
+                        username: userRes.user.username,
+                        email: userRes.user.email,
+                        balance: userRes.user.balance,
+                        isVerified: userRes.user.isVerified,
+                        totpVerified: userRes.user.totpVerified,
+                    }));
                     navigate('/account', {
                         state: {
                             name: userRes.user.name,
@@ -102,6 +111,7 @@ const VerifyAccount = () => {
                         backdropFilter: "blur(30px)",
                         backgroundColor: "rgba(255, 255, 255, 0.10)",
                         borderRadius: 2,
+                        boxShadow: 6,
                         py: 4,
                         px: { xs: 1, sm: 3 },
                         width: { xs: 350, sm: 350, md: 400, lg: 450, xl: 470 }
@@ -320,49 +330,6 @@ const VerifyAccount = () => {
                                 }}
                             > Recuperar TOTP
                             </Button>
-                             <Button
-                                type="submit"
-                                variant="contained"
-                                color="success"
-                                onClick={() => logout({ returnTo: window.location.origin })}
-                                disabled={loading}
-                                sx={{
-                                    fontSize: "1rem",
-                                    height: 45,
-                                    width: {
-                                        xs: "100%",
-                                        sm: "100%",
-                                        md: "50%",
-                                        lg: "50%",
-                                        xl: "50%",
-                                    },
-                                    marginRight: {
-                                        xs: 0,
-                                        sm: 0,
-                                        md: "1rem",
-                                        lg: "1.5rem",
-                                        xl: "1.5rem"
-                                    },
-                                    marginBottom: {
-                                        xs: "1.3rem",
-                                        sm: "1.3rem",
-                                        md: 0,
-                                        lg: 0,
-                                        xl: 0
-                                    },
-                                    color: "white",
-                                    backgroundColor: "#2485e9",
-                                    "&:hover": {
-                                        backgroundColor: "#1f73ca"
-                                    },
-                                    "&.Mui-disabled": {
-                                        backgroundColor: "#1f73ca",
-                                        color: "white",
-                                    },
-                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
-                                }}
-                                disableElevation
-                            >Logout</Button>
                         </Stack>
                     </Box>
                 </Stack>
