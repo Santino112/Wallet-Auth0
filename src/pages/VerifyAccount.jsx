@@ -362,7 +362,7 @@ const VerifyAccount = () => {
                                     width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                 }}
                                 disableElevation
-                            ></Button>
+                            >Logout</Button>
                         </Stack>
                     </Box>
                 </Stack>

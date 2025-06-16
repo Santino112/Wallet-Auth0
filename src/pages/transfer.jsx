@@ -128,7 +128,7 @@ const Transferencia = (e) => {
             sx={{
                 minHeight: "100vh",
                 minWidth: "100vw",
-                backgroundImage: 'url(/images/Transferencia.png)',
+                backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -136,19 +136,13 @@ const Transferencia = (e) => {
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
-                px: { xs: 2, sm: 4 }
+                px: { xs: 2, sm: 2 }
             }}
         >
             <Stack
                 spacing={5}
                 sx={{
-                    width: {
-                        xs: "100%",
-                        sm: "100%",
-                        md: "60%",
-                        lg: "40%",
-                        xl: "45%",
-                    },
+                    width: { xs: 350, sm: 350, md: 400, lg: 650, xl: 670 },
                     height: {
                         xs: "100%",
                         sm: "100%",
@@ -156,9 +150,9 @@ const Transferencia = (e) => {
                         lg: "auto",
                         xl: "auto",
                     },
-                    backdropFilter: "blur(5px)",
+                    backdropFilter: "blur(30px)",
                     backgroundColor: "rgba(255, 255, 255, 0.10)",
-                    boxShadow: "0 1px 12px rgba(25, 25, 25, 0.8)",
+                    boxShadow: 6,
                     borderRadius: 2,
                     py: 5,
                     px: { xs: 2, sm: 4 }
@@ -195,12 +189,12 @@ const Transferencia = (e) => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        width: "100%",
-                        height: "100%",
-                        gap: 5
+                        justifyContent: "center",
+                        mx: "auto",
+                        gap: 3
                     }}
                 >
-                    <Box sx={{ width: { xs: "90%", sm: "70%", md: "50%" } }}>
+                    <Box sx={{width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }}}>
                         <Autocomplete
                             value={alias}
                             onChange={(event, newValue) => setAlias(newValue)}
@@ -215,6 +209,7 @@ const Transferencia = (e) => {
                                     "&:hover fieldset": { borderColor: "white" },
                                     "&.Mui-focused fieldset": { borderColor: "white" }
                                 },
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                             }}
                             renderInput={(params) => (
                                 <TextField
@@ -247,6 +242,7 @@ const Transferencia = (e) => {
                                     "&:hover fieldset": { borderColor: "white" },
                                     "&.Mui-focused fieldset": { borderColor: "white" }
                                 },
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                             }}
                         />
 
@@ -269,6 +265,7 @@ const Transferencia = (e) => {
                                     "&:hover fieldset": { borderColor: "white" },
                                     "&.Mui-focused fieldset": { borderColor: "white" }
                                 },
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                             }}
                         />
                         <TextField
@@ -289,7 +286,8 @@ const Transferencia = (e) => {
                                     '& fieldset': { borderColor: 'white' },
                                     '&:hover fieldset': { borderColor: 'white' },
                                     '&.Mui-focused fieldset': { borderColor: 'white' },
-                                }
+                                },
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                             }}
                             InputProps={{
                                 endAdornment: (
@@ -318,9 +316,8 @@ const Transferencia = (e) => {
                             }}
                         />
                         <Stack
-                            spacing={2}
-                            direction={{ xs: "column", sm: "column", md: "row" }}
-                            sx={{ mt: 2 }}
+                            direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
+                            sx={{ mt: 2, width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
                         >
                             <Button
                                 variant="contained"
@@ -330,25 +327,47 @@ const Transferencia = (e) => {
                                 sx={{
                                     fontSize: "1rem",
                                     width: "100%",
-                                    backgroundColor: "#74c69d",
+                                    backgroundColor: "#2485e9",
+                                    color: "white",
                                     "&:hover": {
-                                        backgroundColor: "#52b788"
-                                    }
+                                        backgroundColor: "#1f73ca",
+                                        color: "white",
+                                    },
+                                    "&.Mui-disabled": {
+                                        backgroundColor: "#1f73ca",
+                                        color: "white",
+                                    },
+                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 },
+                                    marginBottom: {
+                                        xs: "1.4rem",
+                                        sm: "1.4rem",
+                                        md: 0,
+                                        lg: 0,
+                                        xl: 0
+                                    },
+                                    marginRight: {
+                                        xs: 0,
+                                        sm: 0,
+                                        md: "1rem",
+                                        lg: "1.5rem",
+                                        xl: "1.5rem"
+                                    },
                                 }}
                             >
                                 {loading ? "Cargando..." : "Transferir"}
                             </Button>
                             <Button
-                                variant="contained"
-                                color="success"
+                                variant="outlined"
+
                                 onClick={Account}
                                 sx={{
                                     fontSize: "1rem",
                                     width: "100%",
-                                    backgroundColor: "#d8f3dc",
+                                    color: "white",
                                     "&:hover": {
-                                        backgroundColor: "#b7e4c7"
-                                    }
+                                        color: "white"
+                                    },
+                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                 }}
                             >
                                 Volver

@@ -52,7 +52,7 @@ const Account = () => {
     <Box component="section" sx={{
       minHeight: "100vh",
       minWidth: "100vw",
-      backgroundImage: 'url(/images/Cuenta.png)',
+      backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -77,10 +77,10 @@ const Account = () => {
             borderRadius: 2,
             height: "auto",
             justifyContent: "center",
-            height: 500,
-            backdropFilter: "blur(5px)",
-            backgroundColor: "rgba(52, 0, 129, 0.23)",
-            boxShadow: "0 1px 12px rgba(0, 0, 0, 0)"
+            height: "auto",
+            backdropFilter: "blur(30px)",
+            backgroundColor: "rgba(255, 255, 255, 0.10)",
+            boxShadow: 6,
           }}
         >
           <Stack spacing={4} direction="column" sx={{ width: "100%", color: "white" }}>
@@ -114,20 +114,36 @@ const Account = () => {
             <Button variant="contained" onClick={transferir} sx={{
               cursor: "pointer",
               fontSize: "1rem",
-              backgroundColor: "#74c69d",
+              color: "white",
+              backgroundColor: "#2485e9",
               "&:hover": {
-                backgroundColor: "#52b788"
+                backgroundColor: "#1f73ca",
+                color: "white",
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#1f73ca",
+                color: "white",
               }
             }} disableElevation>
               Transferir
             </Button>
-            <Button variant="contained" onClick={() => logout({ returnTo: window.location.origin })} sx={{
+            <Button variant="outlined" sx={{
               cursor: "pointer",
               fontSize: "1rem",
-              backgroundColor: "#d8f3dc",
+              color: "white",
               "&:hover": {
-                backgroundColor: "#b7e4c7"
-              }
+                color: "white"
+              },
+            }} disableElevation>
+               Perfil de usuario
+            </Button>
+            <Button variant="outlined" onClick={() => logout({ returnTo: window.location.origin })} sx={{
+              cursor: "pointer",
+              fontSize: "1rem",
+              color: "white",
+              "&:hover": {
+                color: "white"
+              },
             }} disableElevation>
               <LogoutIcon fontSize="medium" sx={{ marginRight: "0.3rem" }} />Logout
             </Button>
@@ -144,9 +160,9 @@ const Account = () => {
             p: 3,
             borderRadius: 2,
             color: "white",
-            backdropFilter: "blur(5px)",
-            backgroundColor: "rgba(52, 0, 129, 0.23)",
-            boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
+            backdropFilter: "blur(30px)",
+            backgroundColor: "rgba(255, 255, 255, 0.10)",
+            boxShadow: 6,
             marginBottom: { xs: "1rem", sm: "1rem" }
           }}
         >
@@ -167,15 +183,15 @@ const Account = () => {
               InputLabelProps={{ required: false }}
               sx={{ flexGrow: 1, width: "100px", color: "white" }}
             />
-            <Button variant="contained" type="submit" sx={{
+            <Button variant="outlined" type="submit" sx={{
               cursor: "pointer",
               fontSize: "1rem",
-              backgroundColor: "#74c69d",
+              color: "white",
               "&:hover": {
-                backgroundColor: "#52b788"
-              }
+                color: "white"
+              },
             }} disableElevation>
-              Ver historial
+              Movimientos
             </Button>
           </Box>
 

@@ -155,7 +155,7 @@ const recuperacionTotp = () => {
                                             "&:hover fieldset": { borderColor: "white" },
                                             "&.Mui-focused fieldset": { borderColor: "white" }
                                         },
-                                        width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
+                                        width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                     }}
                                 />
 
@@ -185,13 +185,13 @@ const recuperacionTotp = () => {
                                             "&:hover fieldset": { borderColor: "white" },
                                             "&.Mui-focused fieldset": { borderColor: "white" }
                                         },
-                                        width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
+                                        width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                     }}
                                 />
 
                                 <Stack
                                     direction={{ xs: "column", sm: "column", md: "row", lg: "row,", xl: "row" }}
-                                    sx={{ mt: 2, width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 } }}
+                                    sx={{ mt: 2, width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
                                 >
                                     <Button
                                         variant="contained"
@@ -225,13 +225,14 @@ const recuperacionTotp = () => {
                                             color: "white",
                                             backgroundColor: "#2485e9",
                                             "&:hover": {
-                                                backgroundColor: "#1f73ca"
+                                                backgroundColor: "#1f73ca",
+                                                color: "white",
                                             },
                                             "&.Mui-disabled": {
                                                 backgroundColor: "#1f73ca",
                                                 color: "white",
                                             },
-                                            width: { xs: 290, sm: 290, md: 300, lg: 300, xl: 300 }
+                                            width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                         }}
                                     >
                                         {loading ? "Cargando..." : "Generar"}
@@ -255,7 +256,7 @@ const recuperacionTotp = () => {
                                             "&:hover": {
                                                 color: "white",
                                             },
-                                            width: { xs: 290, sm: 290, md: 250, lg: 280, xl: 300}
+                                            width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                         }}
                                     >Volver
                                     </Button>
@@ -367,11 +368,16 @@ const recuperacionTotp = () => {
                                                 lg: "100%",
                                                 xl: "100%",
                                             },
-                                            backgroundColor: "#d8f3dc",
+                                            color: "white",
+                                            backgroundColor: "#2485e9",
                                             "&:hover": {
-                                                backgroundColor: "#b7e4c7",
-                                                color: "#000"
-                                            }
+                                                backgroundColor: "#1f73ca",
+                                                color: "white",
+                                            },
+                                            "&.Mui-disabled": {
+                                                backgroundColor: "#1f73ca",
+                                                color: "white",
+                                            },
                                         }}
                                     >Volver a verificar
                                     </Button>
