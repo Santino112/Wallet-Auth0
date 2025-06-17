@@ -3,6 +3,10 @@ import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PaidIcon from '@mui/icons-material/Paid';
+import InfoIcon from '@mui/icons-material/Info';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 const Transferencia = (e) => {
     const [loading, setLoading] = useState(false);
@@ -23,7 +27,7 @@ const Transferencia = (e) => {
 
 
     const { name, username } = JSON.parse(
-        localStorage.getItem("datosLogin")
+        localStorage.getItem("userData")
     );
 
     const handleToggleShowCodigo = () => {
@@ -194,7 +198,7 @@ const Transferencia = (e) => {
                         gap: 3
                     }}
                 >
-                    <Box sx={{width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }}}>
+                    <Box sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}>
                         <Autocomplete
                             value={alias}
                             onChange={(event, newValue) => setAlias(newValue)}
@@ -215,9 +219,20 @@ const Transferencia = (e) => {
                                 <TextField
                                     {...params}
                                     label="Alias"
-                                    variant="outlined"
+                                    variant="standard"
                                     required
                                     InputLabelProps={{ required: false }}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        startAdornment: (
+                                            <>
+                                                <InputAdornment position="start">
+                                                    <AccountCircleIcon style={{ color: "white" }} />
+                                                </InputAdornment>
+                                                {params.InputProps.startAdornment}
+                                            </>
+                                        ),
+                                    }}
                                     fullWidth
                                 />
                             )}
@@ -225,11 +240,18 @@ const Transferencia = (e) => {
 
                         <TextField
                             label="Cantidad"
-                            type="number"
-                            variant="outlined"
+                            type="text"
+                            variant="standard"
                             value={cantidad}
                             onChange={(e) => setCantidad(e.target.value)}
                             InputLabelProps={{ required: false }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <PaidIcon style={{ color: "white" }} />
+                                    </InputAdornment>
+                                )
+                            }}
                             required
                             fullWidth
                             sx={{
@@ -249,10 +271,17 @@ const Transferencia = (e) => {
                         <TextField
                             label="Detalle"
                             type="text"
-                            variant="outlined"
+                            variant="standard"
                             value={detalle}
                             onChange={(e) => setDetalle(e.target.value)}
                             InputLabelProps={{ required: false }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <InfoIcon style={{ color: "white" }} />
+                                    </InputAdornment>
+                                )
+                            }}
                             required
                             fullWidth
                             sx={{
@@ -270,26 +299,18 @@ const Transferencia = (e) => {
                         />
                         <TextField
                             label="Código"
-                            variant="outlined"
-                            type={showCodigo ? 'number' : 'password'}
+                            variant="standard"
+                            type={showCodigo ? 'text' : 'password'}
                             value={codigo}
                             onChange={(e) => setCodigo(e.target.value)}
                             required
                             InputLabelProps={{ required: false }}
-                            fullWidth
-                            sx={{
-                                mb: 3,
-                                input: { color: 'white' },
-                                label: { color: 'white' },
-                                '& label.Mui-focused': { color: 'white' },
-                                '& .MuiOutlinedInput-root': {
-                                    '& fieldset': { borderColor: 'white' },
-                                    '&:hover fieldset': { borderColor: 'white' },
-                                    '&.Mui-focused fieldset': { borderColor: 'white' },
-                                },
-                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
-                            }}
                             InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <VpnKeyIcon style={{ color: "white" }} />
+                                    </InputAdornment>
+                                ),
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
@@ -309,10 +330,24 @@ const Transferencia = (e) => {
                                                 }
                                             }}
                                         >
-                                            {showCodigo ? <VisibilityOff /> : <Visibility />}
+                                            {showCodigo ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
                                     </InputAdornment>
                                 ),
+                            }}
+                            fullWidth
+                            sx={{
+                                mb: 3,
+                                input: { color: 'white' },
+                                label: { color: 'white' },
+                                '& label.Mui-focused': { color: 'white' },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': { borderColor: 'white' },
+                                    '&:hover fieldset': { borderColor: 'white' },
+                                    '&.Mui-focused fieldset': { borderColor: 'white' },
+                                },
+                                width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 },
+                                mb: 4
                             }}
                         />
                         <Stack
