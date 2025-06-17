@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton } from "@mui/material";
+import { Navigate, useNavigate, Link } from "react-router-dom";
+import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton, textFieldClasses } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -77,9 +77,9 @@ const Transferencia = (e) => {
                         setTimeout(() => {
                             setMensaje('');
                             setOpen(true);
-                        }, 5000);
+                        }, 50000000);
 
-                        const datosActuales = JSON.parse(localStorage.getItem("datosLogin"));
+                        const datosActuales = JSON.parse(localStorage.getItem("userData"));
                         const nuevoBalance = transferRes.transfer.from.newBalance;
 
                         const nuevosDatos = {
@@ -88,7 +88,7 @@ const Transferencia = (e) => {
                             token: datosActuales.token
                         };
 
-                        localStorage.setItem("datosLogin", JSON.stringify(nuevosDatos));
+                        localStorage.setItem("userData", JSON.stringify(nuevosDatos));
                     } else {
                         setMensaje(transferRes.message || "Error en la transferencia.");
                         setSeverity("error");
@@ -465,6 +465,9 @@ const Transferencia = (e) => {
                 {mensaje && (
                     <Alert variant="filled" severity={severity} sx={{ color: "#ffff" }}>
                         {mensaje}
+                        <Link to="/comprobante" sx={{color: "inherit", textDecoration: "none"}}>
+                             <Button sx={{color: "black"}}>Ver recibo</Button>
+                        </Link>
                     </Alert>
                 )}
             </Stack>
