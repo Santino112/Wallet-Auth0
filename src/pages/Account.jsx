@@ -6,6 +6,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import CallReceivedIcon from '@mui/icons-material/CallReceived';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -265,11 +267,19 @@ const Account = () => {
               >
                 <AccordionSummary expandIcon={<ArrowDropDownIcon sx={{ color: '#fff', backgroundColor: tx.type === 'sent' ? '#f44336' : '#4caf50' }} />}>
                   <Typography>
-                    {tx.type === 'sent' ? `Enviado a ${tx.toName}` : `Recibido de ${tx.fromName}`}
+                    {tx.type === 'sent' ? 
+                    <>
+                      <ForwardToInboxIcon fontSize= "small" sx={{verticalAlign: "middle", mr: 1}}/> Enviado a {tx.toName} 
+                    </>
+                    : 
+                    <>
+                      <CallReceivedIcon fontSize="small" sx={{verticalAlign: "middle", mr: 1}}/> Recibido de {tx.fromName} 
+                    </>
+                  }
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>Monto: {tx.amount} R$</Typography>
+                  <Typography>Monto: $ {tx.amount} Raulo</Typography>
                   <Typography>Descripción: {tx.description}</Typography>
                   <Typography>Fecha: {new Date(tx.createdAt * 1000).toLocaleString()}</Typography>
                   {tx.awardedBy && <Typography>Premiado por: {tx.awardedBy}</Typography>}

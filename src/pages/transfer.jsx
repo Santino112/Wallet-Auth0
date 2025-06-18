@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate, Link as RouterLink } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton, Snackbar } from "@mui/material";
+import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton, Snackbar, AlertTitle } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link as MuiLink } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -18,6 +18,7 @@ const Transferencia = (e) => {
     const [showCodigo, setShowCodigo] = useState(false);
     const [severity, setSeverity] = useState("");
     const [mensaje, setMensaje] = useState("");
+    const [titulo, setTitulo] = useState("");
     const navigate = useNavigate();
     const [fechaTransferencia, setFechaTransferencia] = useState(null);
     const [open, setOpen] = React.useState(false);
@@ -66,6 +67,7 @@ const Transferencia = (e) => {
                     const transferRes = transferResponse.data;
 
                     if (transferRes.success) {
+                        setTitulo("Éxito")
                         setMensaje(transferRes.message);
                         setTransferData({
                             username,
@@ -75,10 +77,7 @@ const Transferencia = (e) => {
                         });
                         setFechaTransferencia(new Date());
                         setSeverity("success");
-                        setTimeout(() => {
-                            setMensaje('');
-                            setOpen(true);
-                        }, 50000000);
+                        setOpen(true);
 
                         const datosActuales = JSON.parse(localStorage.getItem("userData"));
                         const nuevoBalance = transferRes.transfer.from.newBalance;
@@ -91,6 +90,7 @@ const Transferencia = (e) => {
 
                         localStorage.setItem("userData", JSON.stringify(nuevosDatos));
                     } else {
+                        setTitulo("Error");
                         setMensaje(transferRes.message || "Error en la transferencia.");
                         setSeverity("error");
                         setTimeout(() => {
@@ -98,6 +98,7 @@ const Transferencia = (e) => {
                         }, 5000);
                     }
                 } catch (error) {
+                    setTitulo("Error");
                     setMensaje(error.response?.data?.message || "Error desconocido al hacer la transferencia.");
                     setSeverity("error");
                     setTimeout(() => {
@@ -105,6 +106,7 @@ const Transferencia = (e) => {
                     }, 5000);
                 }
             } else {
+                setTitulo("Error");
                 setMensaje(res.message || "Error en la verificación del TOTP.");
                 setSeverity("error");
                 setTimeout(() => {
@@ -112,6 +114,7 @@ const Transferencia = (e) => {
                 }, 5000);
             }
         } catch (error) {
+            setTitulo("Error");
             setMensaje(error.response?.data?.message || "Error desconocido al verificar el TOTP.");
             setSeverity("error");
             setTimeout(() => {
@@ -144,6 +147,25 @@ const Transferencia = (e) => {
                 px: { xs: 2, sm: 2 }
             }}
         >
+            <Snackbar
+                open={Boolean(mensaje)}
+                autoHideDuration={null}
+                onClose={() => setMensaje(null)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                sx={{ mt: "2rem" }}
+            >
+                {mensaje && (
+                    <Alert variant="filled" severity={severity} {...(severity === "success" && { onClose: () => setMensaje(null) })} sx={{ color: "#ffffff", width: { xs: "100%", sm: "100%", md: 450, lg: 450, xl: 450 }, height: 95 }}>
+                        <AlertTitle>{titulo}</AlertTitle>
+                        {mensaje}
+                        {severity === "success" && (
+                            <MuiLink component={RouterLink} to="/comprobante" underline="none">
+                                <Button sx={{ color: "inherit", ml: 1 }}>Ver recibo</Button>
+                            </MuiLink>
+                        )}
+                    </Alert>
+                )}
+            </Snackbar>
             <Stack
                 spacing={5}
                 sx={{
@@ -408,78 +430,12 @@ const Transferencia = (e) => {
                             >
                                 Volver
                             </Button>
+                            <MuiLink component={RouterLink} to="/comprobante" underline="none">
+                                <Button sx={{ color: "inherit", ml: 1 }}>Ver recibo</Button>
+                            </MuiLink>
                         </Stack>
                     </Box>
                 </Box>
-                <Stack spacing={3}
-                    alignItems="center"
-                    sx={{
-                        width: {
-                            xs: "100%",
-                            sm: "100%",
-                            md: "auto",
-                            lg: "auto",
-                            xl: "auto",
-                        },
-                    }}>
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: 400,
-                            bgcolor: 'background.paper',
-                            border: '2px solid #000',
-                            boxShadow: 24,
-                            p: 4,
-                            backdropFilter: "blur(20px)",
-                            backgroundColor: "rgba(52, 0, 129, 0.23)",
-                            boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
-                        }}>
-                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Recibo de la transferencia
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                De: {transferData.username}
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Para: {transferData.alias}
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Cantidad: {transferData.cantidad}
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Detalle: {transferData.detalle}
-                            </Typography>
-                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                Fecha: {fechaTransferencia ? fechaTransferencia.toLocaleString() : "Cargando"}
-                            </Typography>
-                        </Box>
-                    </Modal>
-                </Stack>
-                <Snackbar
-                    open={Boolean(mensaje)}
-                    autoHideDuration={4000}
-                    onClose={() => setMensaje(null)}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                >
-                    {mensaje && (
-                        <Alert variant="filled" severity={severity} sx={{ color: "#ffffff" }}>
-                            <Stack direction="row" alignItems="center" justifyContent="space-between">
-                                <span>{mensaje}</span>
-                                <MuiLink component={RouterLink} to="/comprobante" underline="none">
-                                    <Button sx={{ color: "inherit" }}>Ver recibo</Button>
-                                </MuiLink>
-                            </Stack>
-                        </Alert>
-                    )}
-                </Snackbar>
             </Stack>
         </Box>
     );
