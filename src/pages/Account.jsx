@@ -13,7 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Account = () => {
-  const { name, username, balance } = JSON.parse(localStorage.getItem("userData"))
+  const { name, username, email, balance } = JSON.parse(localStorage.getItem("userData"))
   const [codigo, setCodigo] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -46,9 +46,8 @@ const Account = () => {
 
   const obtenerHistorial = async () => {
     try {
-      const response = await axios.post("https://raulocoin.onrender.com/api/transactions", {
-        username,
-        totpToken: codigo
+      const response = await axios.post("https://raulocoin.onrender.com/api/auth0/transactions", {
+        email
       });
       const res = response.data;
       if (res.success) {
@@ -207,8 +206,8 @@ const Account = () => {
           sx={{
             width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 600 },
             height: {
-              xs: "auto",
-              sm: "auto",
+              xs: 500,
+              sm: 500,
               md: 500,
               lg: 500,
               xl: 500
@@ -224,23 +223,20 @@ const Account = () => {
             marginBottom: { xs: "1rem", sm: "1rem" }
           }}
         >
-          <Box
-            component="form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              obtenerHistorial();
-            }}
-            sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 2 }}
-          >
-            <TextField
-              label="Código TOTP"
-              variant="outlined"
-              value={codigo}
-              onChange={(e) => setCodigo(e.target.value)}
-              required
-              InputLabelProps={{ required: false }}
-              sx={{ flexGrow: 1, width: "100px", color: "white" }}
-            />
+          <Stack spacing={4} direction={{xs: "column", sm:"column", md: "row", lg: "row", xl: "row"}} justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
+            <Typography variant="Body1" sx={{
+              fontSize: {
+                xs: "1.5rem",
+                sm: "1.5rem",
+                md: "1.5rem",
+                lg: "1.5rem",
+                xl: "1.6rem"
+              },
+              textAlign: {
+                xs: "center",
+                sm: "center"
+              }
+            }}>Movimientos recientes</Typography>
             <Button variant="outlined" type="submit" onClick={movimientos} sx={{
               cursor: "pointer",
               fontSize: "1rem",
@@ -249,11 +245,13 @@ const Account = () => {
                 color: "white"
               },
             }} disableElevation>
-              Movimientos
+              Ver todos
             </Button>
-          </Box>
-
-          {transactions.map((tx) => (
+          </Stack>
+          {[...transactions]
+          .sort((a,b) => b.createdAt - a.createdAt)
+          .slice(0,6)
+          .map((tx) => (
             <Accordion
               key={tx.id}
               sx={{

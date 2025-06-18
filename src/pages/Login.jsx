@@ -18,10 +18,9 @@ const Login = () => {
   };
 
   const handleRecuperarCodigo = () => {
-    navigate('/recuperacionTotp'), {state: {from: "login"}};
+    navigate('/recuperacionTotp'), { state: { from: "login" } };
   };
 
-  //Definicion de dependencias de Auth0
   const {
     isAuthenticated,
     user,
@@ -30,7 +29,6 @@ const Login = () => {
     loginWithRedirect,
   } = useAuth0();
 
-  //Llamada al endpoint de autenticación
   const auth0Authenticate = async (data) => {
     try {
       const res = await axios.post(`https://raulocoin.onrender.com/api/auth0/authenticate`, data)
@@ -41,7 +39,6 @@ const Login = () => {
     }
   };
 
-  //Funcion de login
   const handleLoginClick = () => {
     loginWithRedirect({
       authorizationParams: {
@@ -93,8 +90,22 @@ const Login = () => {
 
         if (!res.user.totpVerified) {
           navigate("/verify-account")
+        } else if (res.user.totpVerified) {
+          const response = await axios.post("https://raulocoin.onrender.com/api/auth0/balance", {email: res.user.email})
+          const respuesta = response.data;
+          if (respuesta.success){
+            localStorage.setItem("userData", JSON.stringify({
+              name: respuesta.user.name,
+              username: respuesta.user.username,
+              email: respuesta.user.email,
+              balance: respuesta.user.balance
+            }));
+            navigate("/account");
+          } else {
+            alert("Error de logueo");
+          }
         } else {
-          navigate("/account")
+          alert("Error de logueo");
         }
       } catch (error) {
         console.error("Error en el login:", error);
@@ -192,8 +203,8 @@ const Login = () => {
                 fontSize: {
                   xs: "2rem",
                   sm: "2rem",
-                  md: "2rem",
-                  lg: "2rem",
+                  md: "2.2rem",
+                  lg: "2.2rem",
                   xl: "2.8rem",
                 },
                 textAlign: "center",
@@ -207,9 +218,9 @@ const Login = () => {
               sx={{
                 fontSize: {
                   xs: "1.2rem",
-                  sm: "1rem",
-                  md: "1.2rem",
-                  lg: "1.1rem",
+                  sm: "1.2rem",
+                  md: "1.3rem",
+                  lg: "1.3rem",
                   xl: "1.5rem",
                 },
                 textAlign: "center",
