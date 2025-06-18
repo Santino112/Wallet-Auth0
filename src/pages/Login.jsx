@@ -193,7 +193,7 @@ const Login = () => {
               xl: "2rem"
             },
             backdropFilter: "blur(30px)",
-            backgroundColor: "rgba(255, 255, 255, 0.10)",
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
           }}
         >
           <Box>

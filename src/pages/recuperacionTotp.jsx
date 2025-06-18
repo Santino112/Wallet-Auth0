@@ -88,8 +88,8 @@ const recuperacionTotp = () => {
                         xl: "auto"
                     },
                     backdropFilter: "blur(30px)",
-                    backgroundColor: "rgba(255, 255, 255, 0.10)",
-                    boxShadow: "0 1px 12px rgba(25, 25, 25, 0.8)",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    boxShadow: 6,
                     borderRadius: 2,
                     py: 6,
                     px: { xs: 1, sm: 3 }
@@ -282,7 +282,7 @@ const recuperacionTotp = () => {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
+                                boxShadow: 6,
                                 width: "100%",
                                 height: "12%",
                                 textAlign: "center"
@@ -335,15 +335,16 @@ const recuperacionTotp = () => {
                                         width: "100%",
                                         height: "auto",
                                         borderRadius: 2,
-                                        boxShadow: "0 4px 10px rgba(0,0,0,0.15)"
+                                        boxShadow: 6
                                     }}
                                 />
                                 <Box sx={{
-                                    maxWidth: 500,
+                                    maxWidth: 700,
                                     width: "100%",
                                     height: "auto",
                                     borderRadius: 2,
-                                    boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+                                    boxShadow: 2,
+                                    p: 2,
                                     marginTop: "1rem",
                                     marginBottom: "1rem"
                                 }}>

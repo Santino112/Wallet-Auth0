@@ -47,9 +47,9 @@ const Totp = () => {
             lg: "auto",
             xl: "auto",
           },
-          backdropFilter: "blur(5px)",
-          backgroundColor: "rgba(52, 0, 129, 0.23)",
-          boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
+          backdropFilter: "blur(30px)",
+          backgroundColor: "rgba(0, 0, 0, 0.1)",
+          boxShadow: 6,
           padding: "2rem"
         }}>
         <Typography

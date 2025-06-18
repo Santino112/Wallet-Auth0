@@ -109,7 +109,7 @@ const VerifyAccount = () => {
                             xl: "auto"
                         },
                         backdropFilter: "blur(30px)",
-                        backgroundColor: "rgba(255, 255, 255, 0.10)",
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
                         borderRadius: 2,
                         boxShadow: 6,
                         py: 4,
@@ -129,7 +129,7 @@ const VerifyAccount = () => {
                                     xl: "2rem",
                                 },
                                 textAlign: "center",
-                                boxShadow: 4,
+                                boxShadow: 6,
                                 marginBottom: {
                                     xs: "1rem",
                                     sm: "1rem",

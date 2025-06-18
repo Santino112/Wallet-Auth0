@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, TextField, Menu, MenuItem, ListItemIcon, Avatar, Divider } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -101,7 +102,7 @@ const Account = () => {
               xl: 500
             },
             backdropFilter: "blur(30px)",
-            backgroundColor: "rgba(255, 255, 255, 0.10)",
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
             boxShadow: 6,
           }}
         >
@@ -218,25 +219,24 @@ const Account = () => {
             borderRadius: 2,
             color: "white",
             backdropFilter: "blur(30px)",
-            backgroundColor: "rgba(255, 255, 255, 0.10)",
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
             boxShadow: 6,
             marginBottom: { xs: "1rem", sm: "1rem" }
           }}
         >
-          <Stack spacing={4} direction={{xs: "column", sm:"column", md: "row", lg: "row", xl: "row"}} justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
-            <Typography variant="Body1" sx={{
-              fontSize: {
-                xs: "1.5rem",
-                sm: "1.5rem",
-                md: "1.5rem",
-                lg: "1.5rem",
-                xl: "1.6rem"
-              },
-              textAlign: {
-                xs: "center",
-                sm: "center"
-              }
-            }}>Movimientos recientes</Typography>
+          <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
+            <Stack spacing={1} direction={{ xs: "row", sm: "row", md: "row", lg: "row", xl: "row" }}>
+              <ReceiptLongIcon fontSize="large"/>
+              <Typography variant="Body1" sx={{
+                fontSize: {
+                  xs: "1.5rem",
+                  sm: "1.5rem",
+                  md: "1.5rem",
+                  lg: "1.5rem",
+                  xl: "1.6rem"
+                }
+              }}>Últimos movimientos</Typography>
+            </Stack>
             <Button variant="outlined" type="submit" onClick={movimientos} sx={{
               cursor: "pointer",
               fontSize: "1rem",
@@ -249,33 +249,33 @@ const Account = () => {
             </Button>
           </Stack>
           {[...transactions]
-          .sort((a,b) => b.createdAt - a.createdAt)
-          .slice(0,6)
-          .map((tx) => (
-            <Accordion
-              key={tx.id}
-              sx={{
-                backdropFilter: "blur(5px)",
-                backgroundColor: "rgba(34, 2, 81, 0)",
-                boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
-                color: '#fff',
-                '&.Mui-expanded': { margin: 0 },
-                '& .MuiAccordionSummary-root:focus-visible': { outline: 'none' }
-              }}
-            >
-              <AccordionSummary expandIcon={<ArrowDropDownIcon sx={{ color: '#fff', backgroundColor: tx.type === 'sent' ? '#f44336' : '#4caf50' }} />}>
-                <Typography>
-                  {tx.type === 'sent' ? `Enviado a ${tx.toName}` : `Recibido de ${tx.fromName}`}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>Monto: {tx.amount} R$</Typography>
-                <Typography>Descripción: {tx.description}</Typography>
-                <Typography>Fecha: {new Date(tx.createdAt * 1000).toLocaleString()}</Typography>
-                {tx.awardedBy && <Typography>Premiado por: {tx.awardedBy}</Typography>}
-              </AccordionDetails>
-            </Accordion>
-          ))}
+            .sort((a, b) => b.createdAt - a.createdAt)
+            .slice(0, 6)
+            .map((tx) => (
+              <Accordion
+                key={tx.id}
+                sx={{
+                  backdropFilter: "blur(5px)",
+                  backgroundColor: "rgba(34, 2, 81, 0)",
+                  boxShadow: "0 1px 12px rgba(0, 0, 0, 0)",
+                  color: '#fff',
+                  '&.Mui-expanded': { margin: 0 },
+                  '& .MuiAccordionSummary-root:focus-visible': { outline: 'none' }
+                }}
+              >
+                <AccordionSummary expandIcon={<ArrowDropDownIcon sx={{ color: '#fff', backgroundColor: tx.type === 'sent' ? '#f44336' : '#4caf50' }} />}>
+                  <Typography>
+                    {tx.type === 'sent' ? `Enviado a ${tx.toName}` : `Recibido de ${tx.fromName}`}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>Monto: {tx.amount} R$</Typography>
+                  <Typography>Descripción: {tx.description}</Typography>
+                  <Typography>Fecha: {new Date(tx.createdAt * 1000).toLocaleString()}</Typography>
+                  {tx.awardedBy && <Typography>Premiado por: {tx.awardedBy}</Typography>}
+                </AccordionDetails>
+              </Accordion>
+            ))}
         </Stack>
       </Stack>
     </Box>

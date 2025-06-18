@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate, Link } from "react-router-dom";
-import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton, textFieldClasses } from "@mui/material";
+import { Navigate, useNavigate, Link as RouterLink } from "react-router-dom";
+import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton, Snackbar } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link as MuiLink } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PaidIcon from '@mui/icons-material/Paid';
 import InfoIcon from '@mui/icons-material/Info';
@@ -155,7 +156,7 @@ const Transferencia = (e) => {
                         xl: "auto",
                     },
                     backdropFilter: "blur(30px)",
-                    backgroundColor: "rgba(255, 255, 255, 0.10)",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
                     boxShadow: 6,
                     borderRadius: 2,
                     py: 5,
@@ -167,7 +168,7 @@ const Transferencia = (e) => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        boxShadow: "0 1px 12px rgba(0, 0, 0, 0.39)",
+                        boxShadow: 6,
                         width: "100%",
                         height: "12%",
                         textAlign: "center"
@@ -462,14 +463,23 @@ const Transferencia = (e) => {
                         </Box>
                     </Modal>
                 </Stack>
-                {mensaje && (
-                    <Alert variant="filled" severity={severity} sx={{ color: "#ffff" }}>
-                        {mensaje}
-                        <Link to="/comprobante" sx={{color: "inherit", textDecoration: "none"}}>
-                             <Button sx={{color: "black"}}>Ver recibo</Button>
-                        </Link>
-                    </Alert>
-                )}
+                <Snackbar
+                    open={Boolean(mensaje)}
+                    autoHideDuration={4000}
+                    onClose={() => setMensaje(null)}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    {mensaje && (
+                        <Alert variant="filled" severity={severity} sx={{ color: "#ffffff" }}>
+                            <Stack direction="row" alignItems="center" justifyContent="space-between">
+                                <span>{mensaje}</span>
+                                <MuiLink component={RouterLink} to="/comprobante" underline="none">
+                                    <Button sx={{ color: "inherit" }}>Ver recibo</Button>
+                                </MuiLink>
+                            </Stack>
+                        </Alert>
+                    )}
+                </Snackbar>
             </Stack>
         </Box>
     );
