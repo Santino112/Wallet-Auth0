@@ -21,7 +21,7 @@ const VerifyAccount = () => {
     };
 
     const handleRecuperarCodigo = () => {
-        navigate('/recuperacionTotp'), {state: {from: "verify-account"}};
+        navigate('/recuperacionTotp'), { state: { from: "verify-account" } };
     };
 
     const handleSubmit = async (e) => {
@@ -301,6 +301,7 @@ const VerifyAccount = () => {
                                         backgroundColor: "#1f73ca",
                                         color: "white",
                                     },
+                                    boxShadow: 3,
                                     width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                 }}
                                 disableElevation

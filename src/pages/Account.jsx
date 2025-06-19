@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, TextField, Menu, MenuItem, ListItemIcon, Avatar, Divider } from '@mui/material';
+import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, Menu, MenuItem, ListItemIcon, Avatar, Divider } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -185,6 +185,7 @@ const Account = () => {
                 xl: "1.6rem"
               }
             }}>Tu alias de transferencia es: {username}</Typography>
+            <Divider/>
             <Button variant="contained" onClick={transferir} sx={{
               cursor: "pointer",
               fontSize: "1rem",
@@ -198,6 +199,7 @@ const Account = () => {
                 backgroundColor: "#1f73ca",
                 color: "white",
               },
+              boxShadow: 3
             }} disableElevation>
               Transferir
             </Button>
@@ -207,7 +209,7 @@ const Account = () => {
           spacing={2}
           direction="column"
           sx={{
-            width: { xs: "100%", sm: "100%", md: 500, lg: 500, xl: 600 },
+            width: { xs: "100%", sm: "100%", md: 550, lg: 550, xl: 600 },
             height: {
               xs: 500,
               sm: 500,
@@ -228,7 +230,7 @@ const Account = () => {
         >
           <Stack spacing={4} direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
             <Stack spacing={1} direction={{ xs: "row", sm: "row", md: "row", lg: "row", xl: "row" }}>
-              <ReceiptLongIcon fontSize="large"/>
+              <ReceiptLongIcon fontSize="large" />
               <Typography variant="Body1" sx={{
                 fontSize: {
                   xs: "1.5rem",
@@ -245,7 +247,7 @@ const Account = () => {
               color: "white",
               "&:hover": {
                 color: "white"
-              },
+              }
             }} disableElevation>
               Ver todos
             </Button>
@@ -267,22 +269,34 @@ const Account = () => {
               >
                 <AccordionSummary expandIcon={<ArrowDropDownIcon sx={{ color: '#fff', backgroundColor: tx.type === 'sent' ? '#f44336' : '#4caf50' }} />}>
                   <Typography>
-                    {tx.type === 'sent' ? 
-                    <>
-                      <ForwardToInboxIcon fontSize= "small" sx={{verticalAlign: "middle", mr: 1}}/> Enviado a {tx.toName} 
-                    </>
-                    : 
-                    <>
-                      <CallReceivedIcon fontSize="small" sx={{verticalAlign: "middle", mr: 1}}/> Recibido de {tx.fromName} 
-                    </>
-                  }
+                    {tx.type === 'sent' ?
+                      <>
+                        <ForwardToInboxIcon fontSize="small" sx={{ verticalAlign: "middle", mr: 1 }} /> Enviado a {tx.toName}
+                      </>
+                      :
+                      <>
+                        <CallReceivedIcon fontSize="small" sx={{ verticalAlign: "middle", mr: 1 }} /> Recibido de {tx.fromName}
+                      </>
+                    }
                   </Typography>
                 </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>Monto: $ {tx.amount} Raulo</Typography>
+                <AccordionDetails sx={{p: 1}}>
+                  <Typography>Monto: ${tx.amount} Raulo</Typography>
                   <Typography>Descripción: {tx.description}</Typography>
                   <Typography>Fecha: {new Date(tx.createdAt * 1000).toLocaleString()}</Typography>
                   {tx.awardedBy && <Typography>Premiado por: {tx.awardedBy}</Typography>}
+                  <Button variant="outlined" onClick={() => navigate("/comprobante", {state: tx})} sx={{
+                    cursor: "pointer",
+                    fontSize: "1rem",
+                    color: "white",
+                    "&:hover": {
+                      color: "white"
+                    },
+                    width: {xs: "100%", sm: "100%"},
+                    mt: 1
+                  }} >
+                    Ver recibo
+                  </Button>
                 </AccordionDetails>
               </Accordion>
             ))}

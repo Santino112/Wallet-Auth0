@@ -62,11 +62,17 @@ const Transferencia = (e) => {
                     operationToken: datosVerify.totpToken
                 };
 
+                const reciboConFecha = {
+                    ...datosTransferencia,
+                    createdAt: Date.now()
+                };
+
                 try {
                     const transferResponse = await axios.post("https://raulocoin.onrender.com/api/transfer", datosTransferencia);
                     const transferRes = transferResponse.data;
 
                     if (transferRes.success) {
+                        localStorage.setItem("reciboTransferencia", JSON.stringify(reciboConFecha));
                         setTitulo("Éxito")
                         setMensaje(transferRes.message);
                         setTransferData({
@@ -87,7 +93,6 @@ const Transferencia = (e) => {
                             balance: nuevoBalance,
                             token: datosActuales.token
                         };
-
                         localStorage.setItem("userData", JSON.stringify(nuevosDatos));
                     } else {
                         setTitulo("Error");
@@ -410,6 +415,7 @@ const Transferencia = (e) => {
                                         lg: "1.5rem",
                                         xl: "1.5rem"
                                     },
+                                    boxShadow: 3
                                 }}
                             >
                                 {loading ? "Cargando..." : "Transferir"}
@@ -430,9 +436,6 @@ const Transferencia = (e) => {
                             >
                                 Volver
                             </Button>
-                            <MuiLink component={RouterLink} to="/comprobante" underline="none">
-                                <Button sx={{ color: "inherit", ml: 1 }}>Ver recibo</Button>
-                            </MuiLink>
                         </Stack>
                     </Box>
                 </Box>

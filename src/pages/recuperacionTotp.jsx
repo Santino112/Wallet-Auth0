@@ -243,6 +243,7 @@ const recuperacionTotp = () => {
                                                 backgroundColor: "#1f73ca",
                                                 color: "white",
                                             },
+                                            boxShadow: 3,
                                             width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
                                         }}
                                     >
@@ -390,6 +391,7 @@ const recuperacionTotp = () => {
                                                 backgroundColor: "#1f73ca",
                                                 color: "white",
                                             },
+                                            boxShadow: 3
                                         }}
                                     >
                                         {textButton}
