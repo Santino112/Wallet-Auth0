@@ -209,7 +209,7 @@ const Login = () => {
                 },
                 textAlign: "center",
                 color: "white",
-                boxShadow: 3
+                mb: 1
               }}
             >
               Iniciar sesión
@@ -229,7 +229,7 @@ const Login = () => {
                 marginBottom: "1.1rem"
               }}
             >
-              ¡Bienvenido de vuelta Santino!
+              ¡Bienvenido de vuelta!
             </Typography>
           </Box>
           <Box

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, Menu, MenuItem, ListItemIcon, Avatar, Divider } from '@mui/material';
+import { Button, Box, Stack, Typography, Accordion, AccordionDetails, AccordionSummary, Menu, MenuItem, ListItemIcon, Avatar, Divider, Card, CardContent } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -108,7 +108,7 @@ const Account = () => {
             boxShadow: 6,
           }}
         >
-          <Stack spacing={4} direction="column" sx={{ width: "100%", color: "white" }}>
+          <Stack spacing={4} direction="column" sx={{ width: "100%", color: "white", fontFamily: "Inter" }}>
             <Stack spacing={4} direction="row" justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
               <Avatar alt="Travis Howard" src="/images/imagenPerfil.png" sx={{ width: 50, height: 50 }} />
               <Button id="basic-button" onClick={handleClick} sx={{
@@ -158,58 +158,87 @@ const Account = () => {
                 </MenuItem>
               </Menu>
             </Stack>
-            <Typography variant="body1" sx={{
-              fontSize: {
-                xs: "1.7rem",
-                sm: "1.6rem",
-                md: "1.6rem",
-                lg: "2rem",
-                xl: "2rem"
-              }
-            }}>Hola {name}, bienvenido de vuelta! <i className="fa-regular fa-face-smile"></i></Typography>
-            <Typography variant="h4" sx={{
-              fontSize: {
-                xs: "1.5rem",
-                sm: "1.5rem",
-                md: "1.5rem",
-                lg: "1.5rem",
-                xl: "1.6rem"
-              }
-            }}>Tu saldo actual es de R$ {balance}</Typography>
-            <Typography variant="body1" sx={{
-              fontSize: {
-                xs: "1.5rem",
-                sm: "1.5rem",
-                md: "1.5rem",
-                lg: "1.5rem",
-                xl: "1.6rem"
-              }
-            }}>Tu alias de transferencia es: {username}</Typography>
-            <Divider/>
+            <Card sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              borderRadius: 3,
+              backdropFilter: "blur(30px)",
+              boxShadow: 3,
+              height: {
+                xs: "100%",
+                sm: "100%",
+                md: 500,
+                lg: 500,
+                xl: 500
+              },
+              width: "100%",
+              px: 5,
+              py: 2
+            }}>
+              <CardContent sx={{width: "100%"}}>
+                <Typography variant="h5" sx={{
+                  fontWeight: 600,
+                  mb: 3,
+                  fontSize: {
+                    xs: "1.3rem",
+                    sm: "1.3rem",
+                    md: "1.6rem",
+                    lg: "1.6rem",
+                    xl: "1.6rem"
+                  }
+                }}>
+                  Hola {name}, bienvenido de vuelta! 😊
+                </Typography>
+                <Typography variant="body1" sx={{ 
+                  mb: 3,
+                  fontSize: {
+                    xs: "1.2rem",
+                    sm: "1.2rem",
+                    md: "1.35rem",
+                    lg: "1.35rem",
+                    xl: "1.35rem"
+                  }
+                  }}>
+                  <strong>Tú saldo actual:</strong> ${balance} raulo coins
+                </Typography>
+                <Typography variant="body1" sx={{
+                   fontSize: {
+                    xs: "1.2rem",
+                    sm: "1.2rem",
+                    md: "1.35rem",
+                    lg: "1.35rem",
+                    xl: "1.35rem"
+                  }
+                }}>
+                  <strong>Alias de transferencia:</strong> {username}
+                </Typography>
+              </CardContent>
+            </Card>
             <Button variant="contained" onClick={transferir} sx={{
-              cursor: "pointer",
-              fontSize: "1rem",
-              color: "white",
-              backgroundColor: "#2485e9",
-              "&:hover": {
-                backgroundColor: "#1f73ca",
-                color: "white",
-              },
-              "&.Mui-disabled": {
-                backgroundColor: "#1f73ca",
-                color: "white",
-              },
-              boxShadow: 3
-            }} disableElevation>
-              Transferir
-            </Button>
+                  cursor: "pointer",
+                  fontSize: "1rem",
+                  color: "white",
+                  backgroundColor: "#2485e9",
+                  "&:hover": {
+                    backgroundColor: "#1f73ca",
+                    color: "white",
+                  },
+                  "&.Mui-disabled": {
+                    backgroundColor: "#1f73ca",
+                    color: "white",
+                  },
+                  boxShadow: 3,
+                  width: "100%"
+
+                }} disableElevation>
+                  Transferir
+                </Button>
           </Stack>
         </Stack>
         <Stack
           spacing={2}
           direction="column"
           sx={{
-            width: { xs: "100%", sm: "100%", md: 550, lg: 550, xl: 600 },
+            width: { xs: "100%", sm: "100%", md: 550, lg: 550, xl: 700 },
             height: {
               xs: 500,
               sm: 500,
@@ -280,19 +309,19 @@ const Account = () => {
                     }
                   </Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{p: 1}}>
+                <AccordionDetails sx={{ p: 1 }}>
                   <Typography>Monto: ${tx.amount} Raulo</Typography>
                   <Typography>Descripción: {tx.description}</Typography>
                   <Typography>Fecha: {new Date(tx.createdAt * 1000).toLocaleString()}</Typography>
                   {tx.awardedBy && <Typography>Premiado por: {tx.awardedBy}</Typography>}
-                  <Button variant="outlined" onClick={() => navigate("/comprobante", {state: tx})} sx={{
+                  <Button variant="outlined" onClick={() => navigate("/comprobante", { state: tx })} sx={{
                     cursor: "pointer",
                     fontSize: "1rem",
                     color: "white",
                     "&:hover": {
                       color: "white"
                     },
-                    width: {xs: "100%", sm: "100%"},
+                    width: { xs: "100%", sm: "100%" },
                     mt: 1
                   }} >
                     Ver recibo

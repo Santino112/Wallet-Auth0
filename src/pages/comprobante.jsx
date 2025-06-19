@@ -15,12 +15,15 @@ const Comprobante = () => {
     const location = useLocation();
     const datosHistorial = location.state;
     const reciboRef = useRef();
-    const [datos, setDatos] = useState(null);
     const navigate = useNavigate();
+    const [datos, setDatos] = useState(() => {
+        if (datosHistorial) {
+            return datosHistorial;
+        };
 
-    const Account = () => {
-        navigate("/Account");
-    };
+        const datosRecibo = localStorage.getItem("reciboTransferencia");
+        return datosRecibo ? JSON.parse(datosRecibo) : null;
+    });
 
     const generarPdf = async () => {
         const canvas = await html2canvas(reciboRef.current);
@@ -36,20 +39,19 @@ const Comprobante = () => {
     };
 
     useEffect(() => {
-        const datosRecibo = localStorage.getItem("reciboTransferencia");
-        console.log(datosRecibo);
-        if (datosRecibo) {
-            setDatos(JSON.parse(datosRecibo));
-        } else {
+
+        if (!datos) {
             navigate("/transfer");
-            return;
         }
-    }, [navigate]);
+
+    }, [datos, navigate]);
+
+    const Account = () => {
+        navigate("/Account");
+    };
 
     if (!datos) {
         return <Typography sx={{ color: "black" }}>Cargando recibo...</Typography>
-    } else if (!datosRecibo) {
-        return <Typography sx={{ color: "black" }}>No hay datos para mostrar</Typography>
     }
 
     return (
@@ -89,7 +91,7 @@ const Comprobante = () => {
                 }}
             >
                 <Stack spacing={4} direction="column" ref={reciboRef} sx={{
-                    width: { xs: 350, sm: 350, md: 400, lg: 350, xl: 650 },
+                    width: { xs: 350, sm: 350, md: 400, lg: 350, xl: 450 },
                     height: {
                         xs: "100%",
                         sm: "100%",
@@ -99,6 +101,7 @@ const Comprobante = () => {
                     },
                     p: 3,
                     boxShadow: 6,
+                    borderRadius: 2,
                     backdropFilter: "blur(10px)",
                     backgroundColor: "rgba(0, 0, 0, 0.38)",
                     color: "white"
@@ -124,20 +127,26 @@ const Comprobante = () => {
                     </Typography>
                     <Typography sx={{ fontFamily: "arial" }}>
                         <CurrencyExchangeIcon sx={{ verticalAlign: "middle", mr: 1 }} />
-                        Cantidad transferida: ${datos.amount} raulo
+                        Cantidad transferida: ${datos.amount} raulo coins
                     </Typography>
                     <Typography sx={{ wordBreak: "break-word" }}>
                         <DescriptionOutlinedIcon sx={{ verticalAlign: "middle", mr: 1 }} />
                         Descripción: {datos.description}
                     </Typography>
-                    <Typography sx={{ fontFamily: "arial" }}>
-                        <PasswordIcon sx={{ verticalAlign: "middle", mr: 1 }} />
-                        Token: {datos.operationToken}
-                    </Typography>
+                    {datos.operationToken && (
+                        <Typography sx={{ fontFamily: "arial" }}>
+                            <PasswordIcon sx={{ verticalAlign: "middle", mr: 1 }} />
+                            Token: {datos.operationToken}
+                        </Typography>
+                    )}
                     <Typography sx={{ fontFamily: "arial" }}>
                         <CalendarMonthIcon sx={{ verticalAlign: "middle", mr: 1 }} />
                         Fecha: {datos.createdAt
-                            ? new Date(datos.createdAt).toLocaleString()
+                            ? new Date(
+                                typeof datos.createdAt === "number" && datos.createdAt < 9999999999
+                                    ? datos.createdAt * 1000
+                                    : datos.createdAt
+                            ).toLocaleString()
                             : "Fecha no disponible"}
                     </Typography>
                     <Divider />
@@ -146,7 +155,7 @@ const Comprobante = () => {
                         direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
                         sx={{
                             mt: 2,
-                            width: { xs: 290, sm: 290, md: 360, lg: "100%", xl: 370 },
+                            width: { xs: 290, sm: 290, md: 360, lg: "100%", xl: "100%" },
                             height: {
                                 xs: "100%",
                                 sm: "100%",

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const VerifyAccount = () => {
@@ -180,7 +180,7 @@ const VerifyAccount = () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <AccountCircleIcon style={{ color: "white" }} />
+                                        <AccountCircleOutlinedIcon style={{ color: "white" }} />
                                     </InputAdornment>
                                 )
                             }}
@@ -213,7 +213,7 @@ const VerifyAccount = () => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <VpnKeyIcon sx={{ color: "white" }} />
+                                        <VpnKeyOutlinedIcon sx={{ color: "white" }} />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (

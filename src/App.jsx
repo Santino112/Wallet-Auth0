@@ -10,12 +10,13 @@ import RecuperacionTotp from "./pages/recuperacionTotp.jsx";
 import Comprobante from "./pages/comprobante.jsx";
 import Movimientos from "./pages/movimientos.jsx";
 import PerfilUsuario from "./pages/perfilUsuario.jsx";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+  },
+  typography: {
+    fontFamily: 'Inter, sans-serif',
   },
 });
 

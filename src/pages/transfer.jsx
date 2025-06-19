@@ -4,10 +4,10 @@ import { Navigate, useNavigate, Link as RouterLink } from "react-router-dom";
 import { Stack, Box, Button, TextField, Typography, Autocomplete, Alert, Modal, InputAdornment, IconButton, Snackbar, AlertTitle } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link as MuiLink } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PaidIcon from '@mui/icons-material/Paid';
-import InfoIcon from '@mui/icons-material/Info';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import PersonSearchOutlinedIcon from '@mui/icons-material/PersonSearchOutlined';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 
 const Transferencia = (e) => {
     const [loading, setLoading] = useState(false);
@@ -255,7 +255,7 @@ const Transferencia = (e) => {
                                         startAdornment: (
                                             <>
                                                 <InputAdornment position="start">
-                                                    <AccountCircleIcon style={{ color: "white" }} />
+                                                    <PersonSearchOutlinedIcon style={{ color: "white" }} />
                                                 </InputAdornment>
                                                 {params.InputProps.startAdornment}
                                             </>
@@ -276,7 +276,7 @@ const Transferencia = (e) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <PaidIcon style={{ color: "white" }} />
+                                        <PaidOutlinedIcon style={{ color: "white" }} />
                                     </InputAdornment>
                                 )
                             }}
@@ -306,7 +306,7 @@ const Transferencia = (e) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <InfoIcon style={{ color: "white" }} />
+                                        <InfoOutlinedIcon style={{ color: "white" }} />
                                     </InputAdornment>
                                 )
                             }}
@@ -336,7 +336,7 @@ const Transferencia = (e) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <VpnKeyIcon style={{ color: "white" }} />
+                                        <VpnKeyOutlinedIcon style={{ color: "white" }} />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
@@ -422,7 +422,6 @@ const Transferencia = (e) => {
                             </Button>
                             <Button
                                 variant="outlined"
-
                                 onClick={Account}
                                 sx={{
                                     fontSize: "1rem",

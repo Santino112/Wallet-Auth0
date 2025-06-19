@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Stack, Box, Button, TextField, Typography, InputAdornment } from "@mui/material";
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const recuperacionTotp = () => {
     const [username, setUsername] = useState("");
@@ -152,7 +152,7 @@ const recuperacionTotp = () => {
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <AccountCircleIcon style={{ color: "white" }} />
+                                                <AccountCircleOutlinedIcon style={{ color: "white" }} />
                                             </InputAdornment>
                                         )
                                     }}
@@ -182,7 +182,7 @@ const recuperacionTotp = () => {
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
-                                                <AlternateEmailIcon style={{ color: "white" }} />
+                                                <AlternateEmailOutlinedIcon style={{ color: "white" }} />
                                             </InputAdornment>
                                         )
                                     }}
