@@ -13,7 +13,7 @@ const recuperacionTotp = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from;
-    const textButton = from === "verify-account" ? "Volver a verificar" : "Volver a inicio"
+    const textButton = from === "verify-account" ? "Volver a inicio" : "Volver a verificar"
 
     const handleVolver = () => {
         if (from === "verify-account") {

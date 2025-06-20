@@ -14,12 +14,14 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import CallReceivedIcon from "@mui/icons-material/CallReceived";
-
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from 'react-router-dom';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
+
 const Movimientos = () => {
+  const navigate = useNavigate();
   const { username, email } = JSON.parse(
     localStorage.getItem("userData") || "{}"
   );
@@ -47,6 +49,10 @@ const Movimientos = () => {
     }
   };
 
+  const Account = () => {
+    navigate("/Account");
+  };
+
   useEffect(() => {
     if (email && username) {
       obtenerHistorial();
@@ -67,11 +73,14 @@ const Movimientos = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        p: 3,
+        p: 2
       }}
     >
       <Stack
         spacing={3}
+        flexDirection="column"
+        alignContent="center"
+        justifyContent="Center"
         sx={{
           width: { xs: "100%", sm: "90%", md: 600 },
           backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -80,15 +89,21 @@ const Movimientos = () => {
           borderRadius: 3,
           boxShadow: 6,
           color: "white",
+          height: {
+              xs: 500,
+              sm: 500,
+              md: 500,
+              lg: 600,
+              xl: 600
+          },
         }}
       >
-        {/* Título con ícono */}
+
         <Stack direction="row" alignItems="center" spacing={1}>
           <ReceiptLongIcon fontSize="large" />
-          <Typography variant="h4">Lista de movimientos</Typography>
+          <Typography variant="h4" sx={{ fontSize: { xs: "1.2rem", sm: "1.2rem", md: "1.5rem", lg: "1.5rem", xl: "1.5rem" } }}>Lista de movimientos</Typography>
         </Stack>
 
-        {/* Input filtro */}
         <TextField
           label="Buscar por alias o nombre"
           variant="standard"
@@ -126,8 +141,17 @@ const Movimientos = () => {
 
         {errorMsg && <Typography color="error">{errorMsg}</Typography>}
 
-        {/* Lista de transacciones */}
-        <Stack spacing={2} sx={{ maxHeight: "400px", overflowY: "auto" }}>
+        <Stack spacing={2} sx={{ 
+          maxHeight: "400px", 
+          overflowY: "auto",
+          height: {
+              xs: 500,
+              sm: 500,
+              md: 500,
+              lg: 600,
+              xl: 600
+          },
+          }}>
           {transactions
             .filter((tx) => {
               const filtroAlias = aliasFiltro.toLowerCase().trim();
@@ -142,7 +166,7 @@ const Movimientos = () => {
 
               const fechaTx = new Date(tx.createdAt * 1000)
                 .toISOString()
-                .slice(0, 10); // YYYY-MM-DD
+                .slice(0, 10);
 
               const coincideFecha =
                 filtroFecha === "" || fechaTx === filtroFecha;
@@ -198,8 +222,30 @@ const Movimientos = () => {
                     )}
                   </AccordionDetails>
                 </Accordion>
+
               );
             })}
+        </Stack>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ mt: 2}}
+        >
+          <Button
+            variant="outlined"
+            onClick={Account}
+            sx={{
+              fontSize: "1rem",
+              width: { xs: 290, sm: 290, md: 360, lg: 400, xl: 370 },
+              color: "white",
+              "&:hover": {
+                color: "white"
+              }
+            }}
+          >
+            Volver
+          </Button>
         </Stack>
       </Stack>
     </Box>

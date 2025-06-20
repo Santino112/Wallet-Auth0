@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Stack, Typography, TextField, Menu, MenuItem, ListItemIcon, Avatar, Divider, Card, CardContent, InputAdornment } from '@mui/material';
+import { Button, Box, Stack, Typography, TextField, Menu, MenuItem, Snackbar, AlertTitle, Alert, ListItemIcon, Avatar, Divider, Card, CardContent, InputAdornment } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
@@ -18,6 +18,10 @@ const perfilUsuario = () => {
   const [username, setUsername] = useState("");
   const [balance, setBalance] = useState("");
   const navigate = useNavigate();
+  const [severity, setSeverity] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [openn, setOpenn] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,8 +71,8 @@ const perfilUsuario = () => {
 
       const nuevosDatos = {
         ...datosActuales,
-        name: name,           
-        username: username    
+        name: name,
+        username: username
       };
 
       localStorage.setItem("userData", JSON.stringify(nuevosDatos));
@@ -76,9 +80,13 @@ const perfilUsuario = () => {
       setUsername(username);
 
       if (response.data.success) {
-        alert("datos cambiados");
+        setTitulo("Éxito");
+        setMensaje(response.data.message);
+        setSeverity("success");
       } else {
-        alert("error al actualizar");
+        setTitulo("Error");
+        setMensaje("Error al actualizar.");
+        setSeverity("error");
       }
     } catch (error) {
       console.error("Error al editar perfil:", error);
@@ -98,8 +106,25 @@ const perfilUsuario = () => {
       backgroundPosition: "center",
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      width: "100%",
+      overflowX: "hidden",
+      p: 2
     }}>
+      <Snackbar
+        open={Boolean(mensaje)}
+        autoHideDuration={5000}
+        onClose={() => setMensaje(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{ mt: "2rem" }}
+      >
+        {mensaje && (
+          <Alert variant="filled" severity={severity} sx={{ color: "#ffffff", width: { xs: "100%", sm: "100%", md: 450, lg: 450, xl: 450 }, height: 95 }}>
+            <AlertTitle>{titulo}</AlertTitle>
+            {mensaje}
+          </Alert>
+        )}
+      </Snackbar>
       <Stack
         direction={{ xs: "column", sm: "column", md: "column", lg: "column", xl: "column" }}
         alignItems="center"
@@ -109,9 +134,9 @@ const perfilUsuario = () => {
             xs: "100%",
             sm: "100%",
             md: 1000,
-            lg: 1300,
+            lg: 1000,
             xl: 1500
-          }
+          },
         }}
       >
         <Stack
@@ -127,11 +152,17 @@ const perfilUsuario = () => {
               xs: 2,
               sm: 2,
               md: 3,
-              lg: 3,
+              lg: 2,
               xl: 3
             },
+            height: {
+              xs: 500,
+              sm: 500,
+              md: 500,
+              lg: 600,
+              xl: 500
+            },
             px: { xs: 2, sm: 4 },
-            height: "auto"
           }}>
           <Card sx={{
             backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -139,6 +170,10 @@ const perfilUsuario = () => {
             backdropFilter: "blur(30px)",
             boxShadow: 3,
             height: "auto",
+            overflow: {
+              xs: "auto",
+              sm: "auto",
+            },
             width: "100%",
             px: 5,
             py: 2
@@ -286,6 +321,7 @@ const perfilUsuario = () => {
                     </Typography>
                     <TextField
                       label="Email"
+                      disabled
                       variant="standard"
                       value={email}
                       onChange={(e) => setUsername(e.target.value)}

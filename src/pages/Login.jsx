@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { Stack, Box, Button, TextField, Typography, InputAdornment, IconButton, Alert, Snackbar } from '@mui/material';
+import { Stack, Box, Button, TextField, Typography, InputAdornment, AlertTitle, IconButton, Alert, Snackbar } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -11,6 +11,7 @@ const Login = () => {
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [titulo, setTitulo] = useState("");
   const navigate = useNavigate();
 
   const handleToggleShowCodigo = () => {
@@ -91,20 +92,31 @@ const Login = () => {
         if (!res.user.totpVerified) {
           navigate("/verify-account")
         } else if (res.user.totpVerified) {
-          const response = await axios.post("https://raulocoin.onrender.com/api/auth0/balance", {email: res.user.email})
+          const response = await axios.post("https://raulocoin.onrender.com/api/auth0/balance", { email: res.user.email })
           const respuesta = response.data;
-          if (respuesta.success){
+          if (respuesta.success) {
+            setTitulo("Éxito");
+            setMensaje("Datos ingresados correctamente");
+            setSeverity("success");
             localStorage.setItem("userData", JSON.stringify({
               name: respuesta.user.name,
               username: respuesta.user.username,
               email: respuesta.user.email,
               balance: respuesta.user.balance
             }));
-            navigate("/account");
+            setTimeout(() => {
+              navigate("/account");
+            }, 3000); 
           } else {
+            setTitulo("Error");
+            setMensaje("Error al actualizar.");
+            setSeverity("error");
             alert("Error de logueo");
           }
         } else {
+          setTitulo("Error");
+          setMensaje("Error al actualizar.");
+          setSeverity("error");
           alert("Error de logueo");
         }
       } catch (error) {
@@ -310,7 +322,7 @@ const Login = () => {
             </Button>
             <Snackbar
               open={Boolean(mensaje)}
-              autoHideDuration={4000}
+              autoHideDuration={3000}
               onClose={() => setMensaje(null)}
               anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >

@@ -327,10 +327,11 @@ const VerifyAccount = () => {
                                     "&:hover": {
                                         color: "white",
                                     },
-                                    width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
+                                    width: { xs: 290, sm: 290, md: 360, lg: 380, xl: 370 }
                                 }}
                             > Recuperar TOTP
                             </Button>
+                            
                         </Stack>
                     </Box>
                 </Stack>
