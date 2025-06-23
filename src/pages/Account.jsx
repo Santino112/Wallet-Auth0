@@ -149,7 +149,7 @@ const Account = () => {
                 <Divider />
                 <MenuItem onClick={() => {
                   handleClose();
-                  logout({ returnTo: window.location.origin });
+                  logout({ returnTo: window.location.origin + "/login" });
                 }}>
                   <ListItemIcon>
                     <LogoutIcon fontSize="small" />
