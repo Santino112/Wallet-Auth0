@@ -17,6 +17,7 @@ const perfilUsuario = () => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [balance, setBalance] = useState("");
+  const [tocado, setTocado] = useState(false);
   const navigate = useNavigate();
   const [severity, setSeverity] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -34,6 +35,10 @@ const perfilUsuario = () => {
   const cuenta = () => {
     navigate('/Account')
   };
+
+  const error = (tocado && name.trim() === "") || name.length > 100;
+
+  const helperText = name.length > 100 ? "Máximo 100 caracteres" : (tocado && name.trim() === "" ? "Este campo no puede estar vacio" : "");
 
   const datosDeBalance = async () => {
     try {
@@ -79,10 +84,14 @@ const perfilUsuario = () => {
       setName(name);
       setUsername(username);
 
-      if (response.data.success) {
+      if (response.data.message === "Perfil actualizado correctamente") {
         setTitulo("Éxito");
         setMensaje(response.data.message);
         setSeverity("success");
+      } else if (response.data.message === "No se detectaron cambios en el perfil") {
+        setTitulo("Sin cambios");
+        setMensaje(response.data.message);
+        setSeverity("info");
       } else {
         setTitulo("Error");
         setMensaje("Error al actualizar.");
@@ -100,7 +109,7 @@ const perfilUsuario = () => {
     <Box component="section" sx={{
       minHeight: "100vh",
       minWidth: "100vw",
-      backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
+      backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -137,263 +146,219 @@ const perfilUsuario = () => {
             lg: 1000,
             xl: 1500
           },
+          p: 3
         }}
       >
-        <Stack
-          spacing={4}
-          direction="column"
-          sx={{
-            width: "100%",
-            color: "white",
-            backdropFilter: "blur(30px)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            borderRadius: 2,
-            py: {
-              xs: 2,
-              sm: 2,
-              md: 3,
-              lg: 2,
-              xl: 3
-            },
-            height: {
-              xs: 500,
-              sm: 500,
-              md: 500,
-              lg: 600,
-              xl: 500
-            },
-            px: { xs: 2, sm: 4 },
-          }}>
-          <Card sx={{
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
-            borderRadius: 3,
-            backdropFilter: "blur(30px)",
-            boxShadow: 3,
-            height: "auto",
-            overflow: {
-              xs: "auto",
-              sm: "auto",
-            },
-            width: "100%",
-            px: 5,
-            py: 2
-          }}>
-            <Stack spacing={4} direction="row" alignItems="center" justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 2, mb: 3 }}>
-              <Typography variant="h5" sx={{
-                fontWeight: 600,
-                fontSize: {
-                  xs: "1rem",
-                  sm: "1.3rem",
-                  md: "1.6rem",
-                  lg: "1.6rem",
-                  xl: "1.6rem"
+        <Card sx={{
+          backgroundColor: "rgba(255, 255, 255, 0.05)",
+          borderRadius: 3,
+          backdropFilter: "blur(30px)",
+          boxShadow: 6,
+          height: "auto",
+          overflow: {
+            xs: "auto",
+            sm: "auto",
+          },
+          width: "100%",
+          p: 3
+        }}>
+          <Stack spacing={4} direction="row" alignItems="center" justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 2, mb: 3 }}>
+            <Typography variant="h5" sx={{
+              fontWeight: 600,
+              fontSize: {
+                xs: "1rem",
+                sm: "1.3rem",
+                md: "1.6rem",
+                lg: "1.6rem",
+                xl: "1.6rem"
+              },
+              verticalAlign: "middle",
+              ml: 1
+            }}>
+              Perfil de usuario
+            </Typography>
+            <Button id="basic-button" onClick={handleClick} sx={{
+              cursor: "pointer",
+              fontSize: "1rem",
+              color: "white",
+              "&:hover": {
+                color: "white"
+              },
+              "&:focus": {
+                outline: "none",
+              },
+              "&:focus-visible": {
+                outline: "none",
+              },
+            }} disableElevation>
+              <MenuIcon fontSize="large" />
+            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              slotProps={{
+                list: {
+                  'aria-labelledby': 'basic-button',
                 },
-                verticalAlign: "middle",
-                ml: 1
+              }}
+            >
+              <MenuItem onClick={() => {
+                handleClose();
+                cuenta();
               }}>
-                Perfil de usuario
-              </Typography>
-              <Button id="basic-button" onClick={handleClick} sx={{
+                <ListItemIcon>
+                  <AccountBoxOutlinedIcon fontSize="small" />
+                </ListItemIcon>
+                Cuenta
+              </MenuItem>
+            </Menu>
+          </Stack>
+          <CardContent sx={{ width: "100%" }}>
+            <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mb: 3 }}>
+              <Avatar alt="Travis Howard" src="/images/ImagenPerfil.jpeg" sx={{ width: { xs: 50, sm: 50, md: 65, lg: 65, xl: 75 }, height: { xs: 50, sm: 50, md: 65, lg: 65, xl: 75 } }} />
+              <Button variant="outlined" sx={{
                 cursor: "pointer",
                 fontSize: "1rem",
                 color: "white",
                 "&:hover": {
                   color: "white"
                 },
-                "&:focus": {
-                  outline: "none",
-                },
-                "&:focus-visible": {
-                  outline: "none",
-                },
-              }} disableElevation>
-                <MenuIcon fontSize="large" />
+                width: { xs: "100%", sm: "100%", md: 300, lg: 250, xl: 250 },
+              }} >
+                Cambiar
               </Button>
-              <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                slotProps={{
-                  list: {
-                    'aria-labelledby': 'basic-button',
-                  },
-                }}
-              >
-                <MenuItem onClick={() => {
-                  handleClose();
-                  cuenta();
-                }}>
-                  <ListItemIcon>
-                    <AccountBoxOutlinedIcon fontSize="small" />
-                  </ListItemIcon>
-                  Cuenta
-                </MenuItem>
-              </Menu>
             </Stack>
-            <CardContent sx={{ width: "100%" }}>
-              <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mb: 3 }}>
-                <Avatar alt="Travis Howard" src="/images/imagenPerfil.png" sx={{ width: { xs: 50, sm: 50, md: 65, lg: 65, xl: 75 }, height: { xs: 50, sm: 50, md: 65, lg: 65, xl: 75 } }} />
-                <Button variant="outlined" sx={{
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                  color: "white",
-                  "&:hover": {
-                    color: "white"
-                  },
-                  width: { xs: "100%", sm: "100%", md: 300, lg: 250, xl: 250 },
-                }} >
-                  Cambiar
-                </Button>
+            <Divider />
+            <Box
+              component="form"
+              onSubmit={editarPerfil}
+            >
+              <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mt: 3, mb: 4 }}>
+                <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="center">
+                  <Typography variant="body1" value={name} sx={{
+                    fontSize: {
+                      xs: "1.2rem",
+                      sm: "1.2rem",
+                      md: "1.35rem",
+                      lg: "1.35rem",
+                      xl: "1.35rem"
+                    },
+                    mr: 3,
+                    mb: {
+                      xs: 1,
+                      sm: 1,
+                      md: 0,
+                      lg: 0,
+                      xl: 0
+                    },
+                    textAlign: "center"
+                  }}>
+                    <strong>Editar</strong> nombre del usuario
+                  </Typography>
+                  <TextField
+                    label="Nombre"
+                    variant="standard"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onBlur={() => setTocado(true)}
+                    error={error}
+                    helperText={helperText}
+                    InputLabelProps={{ required: false }}
+                    fullWidth
+                    sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
+                  />
+                </Stack>
               </Stack>
               <Divider />
-              <Box
-                component="form"
-                onSubmit={editarPerfil}
+              <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mt: 3, mb: 4 }}>
+                <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="center">
+                  <Typography variant="body1" value={name} sx={{
+                    fontSize: {
+                      xs: "1.2rem",
+                      sm: "1.2rem",
+                      md: "1.35rem",
+                      lg: "1.35rem",
+                      xl: "1.35rem"
+                    },
+                    mr: 3,
+                    textAlign: "center"
+                  }}>
+                    <strong>Editar</strong> alias del usuario
+                  </Typography>
+                  <TextField
+                    label="Alias"
+                    variant="standard"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    InputLabelProps={{ required: false }}
+                    fullWidth
+                    sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
+                  />
+                </Stack>
+              </Stack>
+              <Divider />
+              <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mt: 3, mb: 4 }}>
+                <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="center">
+                  <Typography variant="body1" value={name} sx={{
+                    fontSize: {
+                      xs: "1.2rem",
+                      sm: "1.2rem",
+                      md: "1.35rem",
+                      lg: "1.35rem",
+                      xl: "1.35rem"
+                    },
+                    mr: 3,
+                    textAlign: "center"
+                  }}>
+                    Email del usuario
+                  </Typography>
+                  <TextField
+                    label="Email"
+                    disabled
+                    variant="standard"
+                    value={email}
+                    onChange={(e) => setUsername(e.target.value)}
+                    InputLabelProps={{ required: false }}
+                    fullWidth
+                    sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
+                  />
+                </Stack>
+              </Stack>
+              <Divider />
+              <Stack
+                direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
+                sx={{ mt: 3, width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
               >
-                <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mt: 3, mb: 4 }}>
-                  <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="flex-end" justifyContent="center">
-                    <Typography variant="body1" value={name} sx={{
-                      fontSize: {
-                        xs: "1.2rem",
-                        sm: "1.2rem",
-                        md: "1.35rem",
-                        lg: "1.35rem",
-                        xl: "1.35rem"
-                      },
-                      mr: 3,
-                      textAlign: "center"
-                    }}>
-                      <strong>Editar</strong> nombre del usuario
-                    </Typography>
-                    <TextField
-                      label="Nombre"
-                      variant="standard"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      InputLabelProps={{ required: false }}
-                      fullWidth
-                      sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
-                    />
-                  </Stack>
-                </Stack>
-                <Divider />
-                <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mt: 3, mb: 4 }}>
-                  <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="flex-end" justifyContent="center">
-                    <Typography variant="body1" value={name} sx={{
-                      fontSize: {
-                        xs: "1.2rem",
-                        sm: "1.2rem",
-                        md: "1.35rem",
-                        lg: "1.35rem",
-                        xl: "1.35rem"
-                      },
-                      mr: 3,
-                      textAlign: "center"
-                    }}>
-                      <strong>Editar</strong> alias del usuario
-                    </Typography>
-                    <TextField
-                      label="Alias"
-                      variant="standard"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      InputLabelProps={{ required: false }}
-                      fullWidth
-                      sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
-                    />
-                  </Stack>
-                </Stack>
-                <Divider />
-                <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="center" justifyContent="space-between" spacing={3} sx={{ mt: 3, mb: 4 }}>
-                  <Stack direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }} alignItems="flex-end" justifyContent="center">
-                    <Typography variant="body1" value={name} sx={{
-                      fontSize: {
-                        xs: "1.2rem",
-                        sm: "1.2rem",
-                        md: "1.35rem",
-                        lg: "1.35rem",
-                        xl: "1.35rem"
-                      },
-                      mr: 3,
-                      textAlign: "center"
-                    }}>
-                      <strong>Editar</strong> email del usuario
-                    </Typography>
-                    <TextField
-                      label="Email"
-                      disabled
-                      variant="standard"
-                      value={email}
-                      onChange={(e) => setUsername(e.target.value)}
-                      InputLabelProps={{ required: false }}
-                      fullWidth
-                      sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
-                    />
-                  </Stack>
-                </Stack>
-                <Divider />
-                <Stack
-                  direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
-                  sx={{ mt: 3, width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={loading}
+                  sx={{
+                    fontSize: "1rem",
+                    width: "100%",
+                    backgroundColor: "#2485e9",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#1f73ca",
+                      color: "white",
+                    },
+                    "&.Mui-disabled": {
+                      backgroundColor: "#1f73ca",
+                      color: "white",
+                    },
+                    width: { xs: 290, sm: 290, md: 270, lg: 250, xl: 250 },
+                    boxShadow: 3,
+                    mt: "0.8rem"
+                  }}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={loading}
-                    sx={{
-                      fontSize: "1rem",
-                      width: "100%",
-                      backgroundColor: "#2485e9",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "#1f73ca",
-                        color: "white",
-                      },
-                      "&.Mui-disabled": {
-                        backgroundColor: "#1f73ca",
-                        color: "white",
-                      },
-                      width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 },
-                      marginBottom: {
-                        xs: "1.4rem",
-                        sm: "1.4rem",
-                        md: 0,
-                        lg: 0,
-                        xl: 0
-                      },
-                      marginRight: {
-                        xs: 0,
-                        sm: 0,
-                        md: "1rem",
-                        lg: "1.5rem",
-                        xl: "1.5rem"
-                      },
-                      boxShadow: 3
-                    }}
-                  >
-                    {loading ? "Cargando..." : "Guardar"}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    onClick={cuenta}
-                    sx={{
-                      fontSize: "1rem",
-                      width: "100%",
-                      color: "white",
-                      "&:hover": {
-                        color: "white"
-                      },
-                      width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 }
-                    }}
-                  >
-                    Volver
-                  </Button>
-                </Stack>
-              </Box>
-            </CardContent>
-          </Card>
-        </Stack>
+                  {loading ? "Cargando..." : "Guardar"}
+                </Button>
+              </Stack>
+            </Box>
+          </CardContent>
+        </Card>
       </Stack>
     </Box>
   );

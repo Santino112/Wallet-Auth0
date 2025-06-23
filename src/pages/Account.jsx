@@ -72,7 +72,7 @@ const Account = () => {
     <Box component="section" sx={{
       minHeight: "100vh",
       minWidth: "100vw",
-      backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
+      backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -110,7 +110,7 @@ const Account = () => {
         >
           <Stack spacing={4} direction="column" sx={{ width: "100%", color: "white", fontFamily: "Inter" }}>
             <Stack spacing={4} direction="row" justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>
-              <Avatar alt="Travis Howard" src="/images/imagenPerfil.png" sx={{ width: 50, height: 50 }} />
+              <Avatar alt="Travis Howard" src="/images/ImagenPerfil.jpeg" sx={{ width: 50, height: 50 }} />
               <Button id="basic-button" onClick={handleClick} sx={{
                 cursor: "pointer",
                 fontSize: "1rem",
@@ -282,6 +282,12 @@ const Account = () => {
             </Button>
           </Stack>
           {[...transactions]
+            .filter ((tx) => {
+              if (tx.amount === 0 && tx.description?.startsWith("Perfil actualizado:")) {
+                return false;
+              }
+              return true;
+            })
             .sort((a, b) => b.createdAt - a.createdAt)
             .slice(0, 6)
             .map((tx) => (
@@ -310,7 +316,7 @@ const Account = () => {
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ p: 1 }}>
-                  <Typography>Monto: ${tx.amount} Raulo</Typography>
+                  <Typography>Monto: ${tx.amount} Raulo coins</Typography>
                   <Typography>Descripción: {tx.description}</Typography>
                   <Typography>Fecha: {new Date(tx.createdAt * 1000).toLocaleString()}</Typography>
                   {tx.awardedBy && <Typography>Premiado por: {tx.awardedBy}</Typography>}

@@ -63,11 +63,11 @@ const recuperacionTotp = () => {
                 alignItems: "center",
                 minHeight: "100vh",
                 minWidth: "100vw",
-                backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
+                backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                padding: 2
+                padding: 3
             }}
         >
             <Stack
@@ -116,7 +116,7 @@ const recuperacionTotp = () => {
                                     xl: "1.8rem"
                                 }
                             }}>
-                                Ingrese sus datos para regenerar el QR
+                                Regenerar QR de TOTP
                             </Typography>
                         </Box>
 

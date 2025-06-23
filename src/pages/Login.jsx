@@ -106,7 +106,7 @@ const Login = () => {
             }));
             setTimeout(() => {
               navigate("/account");
-            }, 3000); 
+            }, 3000);
           } else {
             setTitulo("Error");
             setMensaje("Error al actualizar.");
@@ -142,12 +142,38 @@ const Login = () => {
         alignItems: "center",
         minHeight: "100vh",
         minWidth: "100vw",
-        backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
+        backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        padding: 3
       }}
     >
+      <Snackbar
+        open={Boolean(mensaje)}
+        autoHideDuration={3000}
+        onClose={() => setMensaje(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{ mt: "2rem" }}
+      >
+        <Alert
+          onClose={() => setMensaje(null)}
+          variant="filled"
+          severity={severity}
+          sx={{
+            color: "#ffff",
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: 300,
+              lg: 350,
+              xl: 400
+            }
+          }}
+        >
+          {mensaje}
+        </Alert>
+      </Snackbar>
       <Box sx={{
         display: "flex",
         flexDirection: {
@@ -158,17 +184,15 @@ const Login = () => {
           xl: "row"
         },
         justifyContent: "center",
-        padding: 5,
         marginBottom: {
           xs: "1rem",
           sm: "1rem"
         }
       }}>
-        <Box></Box>
         <Box
           component="img"
           alt="RauloCoinImage"
-          src={"/images/raulo.png"}
+          src={"/images/Raulo3.png"}
           sx={{
             width: {
               xs: "100%",
@@ -213,7 +237,7 @@ const Login = () => {
               variant="h1"
               sx={{
                 fontSize: {
-                  xs: "2rem",
+                  xs: "2.2rem",
                   sm: "2rem",
                   md: "2.2rem",
                   lg: "2.2rem",
@@ -320,30 +344,6 @@ const Login = () => {
               }}
             >Recuperar código
             </Button>
-            <Snackbar
-              open={Boolean(mensaje)}
-              autoHideDuration={3000}
-              onClose={() => setMensaje(null)}
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-              <Alert
-                onClose={() => setMensaje(null)}
-                variant="filled"
-                severity={severity}
-                sx={{
-                  color: "#ffff",
-                  width: {
-                    xs: "100%",
-                    sm: "100%",
-                    md: 300,
-                    lg: 300,
-                    xl: 280
-                  }
-                }}
-              >
-                {mensaje}
-              </Alert>
-            </Snackbar>
           </Box>
         </Stack>
       </Box>

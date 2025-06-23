@@ -60,7 +60,7 @@ const Comprobante = () => {
             sx={{
                 minHeight: "100vh",
                 minWidth: "100vw",
-                backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
+                backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -68,7 +68,7 @@ const Comprobante = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
-                px: { xs: 2, sm: 2 }
+                px: { xs: 2, sm: 2 },
             }}
         >
             <Stack

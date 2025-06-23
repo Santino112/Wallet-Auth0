@@ -83,11 +83,11 @@ const VerifyAccount = () => {
                     alignItems: "center",
                     minHeight: "100vh",
                     minWidth: "100vw",
-                    backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7)), url(/images/fondo2.jpg)',
+                    backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
-                    padding: 2
+                    padding: 3
                 }}
             >
                 <Stack
@@ -149,7 +149,7 @@ const VerifyAccount = () => {
                                     sm: "1.3rem",
                                     md: "1.2rem",
                                     lg: "1.3rem",
-                                    xl: "1.5rem",
+                                    xl: "1.3rem",
                                 },
                                 textAlign: "center",
                             }}
@@ -327,7 +327,7 @@ const VerifyAccount = () => {
                                     "&:hover": {
                                         color: "white",
                                     },
-                                    width: { xs: 290, sm: 290, md: 360, lg: 380, xl: 370 }
+                                    width: { xs: 290, sm: 290, md: 360, lg: 380, xl: 380 }
                                 }}
                             > Recuperar TOTP
                             </Button>

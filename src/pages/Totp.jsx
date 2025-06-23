@@ -29,7 +29,7 @@ const Totp = () => {
         minHeight: "100vh",
         height: "100vh",
         minWidth: "100vw",
-        backgroundImage: 'url(/images/Inicio.png)',
+        backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
