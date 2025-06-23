@@ -106,7 +106,7 @@ const Login = () => {
             }));
             setTimeout(() => {
               navigate("/account");
-            }, 3000);
+            }, 2000);
           } else {
             setTitulo("Error");
             setMensaje("Error al validar los datos");
@@ -151,7 +151,7 @@ const Login = () => {
     >
       <Snackbar
         open={Boolean(mensaje)}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         onClose={() => setMensaje(null)}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         sx={{ mt: "2rem" }}
