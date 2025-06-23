@@ -37,8 +37,14 @@ const perfilUsuario = () => {
   };
 
   const error = (tocado && name.trim() === "") || name.length > 100;
+  const errorUsername = (tocado && username.trim() === "") || (username.length > 0 && (username.length < 3 || username.length > 30));
 
   const helperText = name.length > 100 ? "Máximo 100 caracteres" : (tocado && name.trim() === "" ? "Este campo no puede estar vacio" : "");
+  const helperTextUsername = (tocado && username.trim() === "")
+    ? "Este campo no puede estar vacío"
+    : (username.length < 3 || username.length > 30
+      ? "Debe tener entre 3 y 30 caracteres"
+      : "");
 
   const datosDeBalance = async () => {
     try {
@@ -290,6 +296,9 @@ const perfilUsuario = () => {
                     variant="standard"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    onBlur={() => setTocado(true)}
+                    error={errorUsername}
+                    helperText={helperTextUsername}
                     InputLabelProps={{ required: false }}
                     fullWidth
                     sx={{ width: { xs: 290, sm: 290, md: 360, lg: 370, xl: 370 } }}

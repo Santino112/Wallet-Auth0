@@ -149,7 +149,7 @@ const Account = () => {
                 <Divider />
                 <MenuItem onClick={() => {
                   handleClose();
-                  logout({ returnTo: window.location.origin + "/login" });
+                  logout({ returnTo: 'https://wallet-auth0.vercel.app/login' });
                 }}>
                   <ListItemIcon>
                     <LogoutIcon fontSize="small" />

@@ -109,18 +109,18 @@ const Login = () => {
             }, 3000);
           } else {
             setTitulo("Error");
-            setMensaje("Error al actualizar.");
+            setMensaje("Error al validar los datos");
             setSeverity("error");
-            alert("Error de logueo");
           }
         } else {
           setTitulo("Error");
-          setMensaje("Error al actualizar.");
+          setMensaje("Error al validar los datos");
           setSeverity("error");
-          alert("Error de logueo");
         }
       } catch (error) {
-        console.error("Error en el login:", error);
+        setTitulo("Error");
+        setMensaje(error);
+        setSeverity("error");
       }
     };
     fetchTokens();
