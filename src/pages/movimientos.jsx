@@ -117,7 +117,7 @@ const Movimientos = () => {
           borderRadius: 3,
           boxShadow: 6,
           color: "white",
-          height: { xs: 700, sm: 700, md: 700, lg: 763, xl: 763 }
+          height: { xs: 700, sm: 700, md: 550, lg: 600, xl: 763 }
         }}
       >
         <Stack direction="row" alignItems="center" spacing={1} sx={{ width: "100%", color: "white", boxShadow: 6, p: 1 }}>

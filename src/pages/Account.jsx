@@ -201,7 +201,7 @@ const Account = () => {
                   <strong>Tú saldo actual:</strong> ${balance} raulo coins
                 </Typography>
                 <Typography variant="body1" sx={{
-                   fontSize: {
+                  fontSize: {
                     xs: "1.2rem",
                     sm: "1.2rem",
                     md: "1.35rem",

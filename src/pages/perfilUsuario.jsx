@@ -94,12 +94,14 @@ const perfilUsuario = () => {
         setSeverity("info");
       } else {
         setTitulo("Error");
-        setMensaje("Error al actualizar.");
+        setMensaje("Error en la actualización.");
         setSeverity("error");
       }
     } catch (error) {
       console.error("Error al editar perfil:", error);
-      alert("Error en la actualización.");
+      setTitulo("Error");
+      setMensaje("Error en la actualización");
+      setSeverity("error");
     } finally {
       setLoading(false);
     }
@@ -110,14 +112,9 @@ const perfilUsuario = () => {
       minHeight: "100vh",
       minWidth: "100vw",
       backgroundImage: 'linear-gradient(115deg, rgba(0, 0, 0, 0.8), rgba(78, 78, 78, 0.7))',
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      width: "100%",
-      overflowX: "hidden",
       p: 2
     }}>
       <Snackbar
@@ -135,7 +132,7 @@ const perfilUsuario = () => {
         )}
       </Snackbar>
       <Stack
-        direction={{ xs: "column", sm: "column", md: "column", lg: "column", xl: "column" }}
+        direction={{ xs: "column", sm: "column", md: "column", lg: "row", xl: "row" }}
         alignItems="center"
         justifyContent="center"
         sx={{
@@ -143,23 +140,25 @@ const perfilUsuario = () => {
             xs: "100%",
             sm: "100%",
             md: 1000,
-            lg: 1000,
+            lg: 1250,
             xl: 1500
           },
-          p: 3
+          height: { xs: "auto", sm: "auto", md: 550, lg: 600, xl: 763 },
+          p: 3,
         }}
       >
         <Card sx={{
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
+          backgroundColor: "rgba(0, 0, 0, 0.1)",
           borderRadius: 3,
           backdropFilter: "blur(30px)",
           boxShadow: 6,
           height: "auto",
           overflow: {
-            xs: "auto",
-            sm: "auto",
+            md: "auto",
+            lg: "auto"
           },
           width: "100%",
+          height: { xs: "auto", sm: "auto", md: 550, lg: 600, xl: 763 },
           p: 3
         }}>
           <Stack spacing={4} direction="row" alignItems="center" justifyContent="space-between" sx={{ width: "100%", color: "white", boxShadow: 6, p: 2, mb: 3 }}>
